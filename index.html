@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" data-enamel="red">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f4ed">
+  <meta name="description" content="Shayan Hajhashemi's research notebook: nonlinear dynamics, scientific machine learning, and ideas in progress.">
+  <title>Shayan Hajhashemi — Notes</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="theme.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="page">
+    <header class="site-header">
+      <h1>Shayan Hajhashemi</h1>
+      <a href="https://github.com/shayshay42">GitHub <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main id="main">
+      <div class="intro">
+        <div class="intro-copy">
+          <p>I’m a PhD student in Quantitative Life Sciences at McGill, working on nonlinear dynamics and scientific machine learning.</p>
+          <p>This is a place for notes on mathematics, biology, and ideas still taking shape.</p>
+        </div>
+        <div class="desk-object">
+          <img class="sharpener" src="assets/angel-5.svg" width="520" height="520" alt="An original illustration of a red Carl Angel-5 pencil sharpener, with a chrome face, hand crank, and clear shavings drawer.">
+          <div class="enamel-picker" role="group" aria-label="Choose an enamel color">
+            <span>Enamel</span>
+            <button type="button" class="swatch red" data-enamel="red" aria-label="Red enamel" aria-pressed="true"></button>
+            <button type="button" class="swatch blue" data-enamel="blue" aria-label="Blue enamel" aria-pressed="false"></button>
+            <button type="button" class="swatch black" data-enamel="black" aria-label="Black enamel" aria-pressed="false"></button>
+          </div>
+        </div>
+      </div>
+
+      <section id="notebook" aria-labelledby="notebook-title">
+        <div class="section-heading">
+          <h2 id="notebook-title">Notes</h2>
+          <span class="muted">Work in progress</span>
+        </div>
+        <div class="entries">
+          <article class="entry">
+            <h3><a href="notes/weighted-weak-lorenz.html">Weak forms, weighted windows, and Lorenz</a></h3>
+            <p>Forecast survival under noise, with methods and benchmark results.</p>
+          </article>
+          <article class="entry">
+            <h3><a href="#note-small-models" data-note="small-models">What can a small model tell us?</a></h3>
+            <p>Useful simplifications and knowing what to leave out. Sample note.</p>
+          </article>
+          <article class="entry">
+            <h3><a href="#note-learning-dynamics" data-note="learning-dynamics">Learning the dynamics between the dots</a></h3>
+            <p>Inverse problems and the equations hiding in data. Sample note.</p>
+          </article>
+          <article class="entry">
+            <h3><a href="#note-good-tools" data-note="good-tools">A small case for good tools</a></h3>
+            <p>A pencil sharpener, a blank page, an unfinished thought. Sample note.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="research" aria-labelledby="research-title">
+        <h2 id="research-title">Selected code</h2>
+        <ul class="projects">
+          <li><a href="https://github.com/shayshay42/weighted-weak-SINDy">Weighted weak SINDy</a><span class="muted"> — learning Lorenz dynamics from noisy states.</span></li>
+          <li><a href="https://github.com/shayshay42/glioma_ddri">Combination therapy</a><span class="muted"> — optimizing dosing schedules in Julia.</span></li>
+          <li><a href="https://github.com/shayshay42/neural_ode_benchmark">Neural ODEs</a><span class="muted"> — benchmarks in Julia and Python.</span></li>
+          <li><a href="https://github.com/shayshay42/spatial_transcriptomics_playground">Spatial transcriptomics</a><span class="muted"> — patterns, graphs, and transport.</span></li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer"><span>A notebook in progress.</span><a href="https://www.carlmfg.com/angel-5-pencil-sharpener/">Inspired by the Carl Angel-5 <span aria-hidden="true">↗</span></a></footer>
+  </div>
+
+  <dialog id="note-dialog" aria-labelledby="note-title">
+    <div class="reader-toolbar"><span class="muted">Notebook</span><button class="close-reader" type="button" aria-label="Close note">Close <span aria-hidden="true">×</span></button></div>
+    <div class="reader-body"><p class="muted" id="note-category"></p><h2 id="note-title"></h2><p class="reader-disclaimer">Sample text for the website draft. Not a published post.</p><div id="note-content"></div></div>
+  </dialog>
+  <noscript><p class="noscript-note">Note previews and enamel colors need JavaScript. Research links work without it.</p></noscript>
+</body>
+</html>
