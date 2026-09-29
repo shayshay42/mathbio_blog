@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
 
 :root {
-  --paper: #f7f4ed;
+  --paper: #ffffff;
   --ink: #30382f;
   --muted: #6b7066;
-  --line: #ddded3;
+  --line: #e1e4de;
   --accent: #a6382b;
   --accent-pale: #eee2da;
   --art-filter: none;
@@ -73,14 +73,18 @@ body:has(dialog[open]) { overflow: hidden; }
 .post-header { margin-bottom: 24px; }
 .post-header h1 { margin-top: 10px; }
 .blog-post p + p { margin-top: 18px; }
-.blog-post section { margin-top: 38px; }
-.blog-post section > h2 { margin-bottom: 18px; }
+.blog-post ul { margin: 18px 0 0; padding-left: 22px; }
+.blog-post li + li { margin-top: 9px; }
+.blog-post > section { margin-top: 38px; }
+.blog-post > section > h2 { margin-bottom: 18px; }
 .blog-post strong { font-weight: 600; }
 .blog-post sup, .blog-post sub { font-size: inherit; line-height: 0; }
 .post-equation { padding: 20px 0; text-align: center; overflow-x: auto; }
 .post-equation > span { display: block; }
 .research-figure { width: min(1200px, calc(100vw - 64px)); margin: 32px 0 30px 50%; transform: translateX(-50%); }
-.research-figure > a { display: block; background: white; }
+.figure-scroll { overflow-x: auto; }
+.figure-scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.figure-scroll > a { display: block; background: white; }
 .research-figure img { display: block; width: 100%; height: auto; }
 .research-figure figcaption { max-width: 760px; margin: 20px auto 0; color: var(--muted); }
 .research-figure a, .post-sources a { text-decoration-color: currentColor; }
@@ -108,6 +112,7 @@ body:has(dialog[open]) { overflow: hidden; }
   .article-nav { margin-bottom: 32px; }
   .article-nav > a { white-space: normal; }
   .research-figure { width: 100%; margin-left: 0; transform: none; }
+  .figure-scroll > a { width: 900px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

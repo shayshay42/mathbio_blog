@@ -1,6 +1,6 @@
 # Shayan’s research notebook
 
-A minimal, responsive personal researcher blog inspired by the Carl Angel-5 pencil sharpener. A simple page brings together a short bio, research links, and sample notes. Cream paper, restrained typography, an enamel palette, and the original SVG sharpener give the page its character.
+A minimal, responsive personal researcher blog inspired by the Carl Angel-5 pencil sharpener. A simple page brings together a short bio, research links, and sample notes. White paper, restrained typography, an enamel palette, and the original SVG sharpener give the page its character.
 
 ## Continue on another machine
 
@@ -14,7 +14,7 @@ python3 -m http.server 4173 --bind 127.0.0.1
 
 Open http://localhost:4173. The Lorenz article is at http://localhost:4173/notes/weighted-weak-lorenz.html. All website assets and the displayed results are included in this repository; the original research workspace is not needed to view or edit the site.
 
-Keep the agreed design: cream paper, one font at two text sizes, minimal sections, the Carl Angel-5 illustration, and red/blue/black enamel choices. The next content task is replacing the Lorenz plot with the newer version from the other machine, which adds integral-matching Lorenz, Panda, and Chronos-T5. Update the article and provenance to match that figure rather than inferring new results from its curves. The three remaining sample notes are placeholders.
+Keep the agreed design: white paper, one font at two text sizes, minimal sections, the Carl Angel-5 illustration, and red/blue/black enamel choices. The Lorenz note now uses the provenance-matched extended figure with integral-matching Lorenz, Panda, and Chronos-T5, and records the later weak-loss Panda-to-SINDy experiment. The three remaining sample notes are placeholders.
 
 Future commits can be shared with `git push`. Keep deployment disabled until it is explicitly requested.
 
@@ -36,12 +36,14 @@ Visit http://localhost:4173. No build or npm install is required. Typography use
 - `theme.js`: shared enamel theme, persisted across the homepage and article.
 - `notes/weighted-weak-lorenz.html`: research entry with verified Lorenz63 methods and core SINDy results.
 - `assets/lorenz/results.csv`: exact VPT estimates and 95% intervals extracted from the accepted v2 bootstrap summary.
+- `assets/lorenz/survival-extension.csv`: exact integral-matching, Panda, and Chronos summary values used in the extended figure discussion.
+- `assets/lorenz/conditioner-results.csv`: exact source-gate and reserved-Lorenz values from the weak/Birkhoff conditioner study.
 - `assets/lorenz/provenance.json`: source hash, extraction scope, and references.
 - `assets/angel-5.svg`: original editable vector illustration.
 
 The Lorenz entry is a research draft grounded in the local accepted v2 results. The other three entries are original sample copy, explicitly labeled as samples; replace them before publishing. The enamel controls switch between red, blue, and black and save the choice in the browser. Sample notes open in a dialog; the research entry has a standalone HTML page and works without JavaScript.
 
-The article currently uses the latest local v2 three-panel survival plot, copied unchanged from `results/v2/visualizations/forecast_survival__all_tracks__noisy_levels.png`; a matching PDF is included. The source image SHA256 was verified against its result manifest. To use the newer plot later, replace `assets/lorenz/forecast-survival.png` and its PDF, update the image dimensions, caption, alt text, method descriptions, and figure provenance. That newer version adds integral-matching Lorenz, Panda, and Chronos-T5; these curves are not discussed as local results in the current entry.
+The article uses the extended three-panel survival plot copied unchanged from `artifacts/v2/tsfm_integral_survival/forecast_survival__all_tracks__noisy_levels.png`; a matching PDF is included. Its PNG and PDF SHA256 hashes were verified against the source result manifest. The title-free plot uses one boxed legend, partitioned into four information-track columns and containing all 16 methods. The post explicitly separates state-only dynamics learning, known-form parameter estimation, exact-physics surrogates, externally pretrained forecasting, and the later amortized Panda-to-SINDy experiment.
 
 Paths in `provenance.json` identify files in the original research workspace; they are provenance references, not website dependencies.
 

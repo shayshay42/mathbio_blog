@@ -1,35 +1,61 @@
 {
-  "study": "Lorenz63 v2 core SINDy results",
-  "source_file": "weighted-weak-SINDy-public/artifacts/v2/core/bootstrap_summary.csv",
-  "source_sha256": "c4c0b830356f7308ed41dab832a07962414c71e8dfb5b6aac793693ca576620e",
-  "extraction": "Exact rows for sindy_strong, sindy_weak, sindy_weak_weighted; metric vpt_restricted_lt; all four training noise levels.",
-  "uncertainty": "Original paired hierarchical bootstrap intervals; 10000 resamples; seed 2026. Not recomputed.",
-  "scope": "Core SINDy table plus the latest local v2 survival plot. The figure contains three information tracks and no Panda, Chronos-T5, or integral-matching extension.",
-  "references": [
-    "weighted-weak-SINDy-public/docs/methods.md",
-    "weighted-weak-SINDy-public/docs/benchmark.md",
-    "weighted-weak-SINDy-public/docs/results/lorenz63_v2.md",
-    "weighted-weak-SINDy-public/configs/v2/lorenz63_frozen.json"
-  ],
+  "schema": "mathbio-blog-lorenz-provenance-v2",
+  "updated_at": "2026-09-29",
+  "source_repository": "https://github.com/shayshay42/weighted-weak-SINDy",
+  "source_commit": "f62145b1a89acb1e143474f0b4cc50ac9821408b",
+  "core_sindy": {
+    "source_file": "artifacts/v2/core/bootstrap_summary.csv",
+    "source_sha256": "c4c0b830356f7308ed41dab832a07962414c71e8dfb5b6aac793693ca576620e",
+    "local_asset": "assets/lorenz/results.csv",
+    "local_sha256": "acc84cf32e5b3c3c16af23ada144444b98b8a2a0efe3e9a301e8c58693c5d662",
+    "extraction": "Exact sindy_strong, sindy_weak, and sindy_weak_weighted rows for restricted mean VPT at all four training-noise levels.",
+    "uncertainty": "Original paired hierarchical bootstrap intervals; 10000 resamples; seed 2026; not recomputed."
+  },
+  "survival_extension": {
+    "source_summary_file": "artifacts/v2/tsfm_integral_survival/summary.csv",
+    "source_summary_sha256": "c214e6375b51ed85fcbef8b5e593decde21dd6c8405ab66ee78b517ff6dfc929",
+    "source_provenance_file": "artifacts/v2/tsfm_integral_survival/provenance.json",
+    "source_provenance_sha256": "85c88bc3673814960c6cf4a3b6e195e1da40abd82ee43d0facb130c89cf74b70",
+    "local_asset": "assets/lorenz/survival-extension.csv",
+    "local_sha256": "c214e6375b51ed85fcbef8b5e593decde21dd6c8405ab66ee78b517ff6dfc929",
+    "combined_run_rows": 720,
+    "combined_trajectory_rows": 92160,
+    "scope": "Adds noise-matched known-form integral matching and fixed-clean-prefix Panda and channel-wise Chronos-T5 references without changing the accepted core benchmark."
+  },
+  "conditioner_study": {
+    "source_file": "artifacts/amortized_sindy/v1/weak_invariant_loss_ablation.json",
+    "source_sha256": "6592698ad8f03cdf5920f6771a1377ffe24d1132666384e5214bbc7f247ef106",
+    "local_asset": "assets/lorenz/conditioner-results.csv",
+    "local_sha256": "4eff2dd5a93868c4db6bf7d09294a6b4f9e84816d0449ae13410984593564412",
+    "scope": "Exact displayed source-validation and reserved-Lorenz metrics from the one-seed weak/Birkhoff loss ablation.",
+    "source_split": "1024 training trajectories from four non-Lorenz families; 128 Sprott-B validation trajectories.",
+    "reserved_audit": "16 Lorenz trajectories; target optimizer steps 0; target sparse-regression solves 0; gate failed.",
+    "ctf4science_run": false
+  },
   "figure": {
-    "source_file": "results/v2/visualizations/forecast_survival__all_tracks__noisy_levels.png",
-    "source_sha256": "b6630c05a92ebc2db17173b651ca71f4942ecf01010f5371e7fa1b310dbf95b2",
-    "completed_at": "2026-07-20T17:32:57.915858+00:00",
-    "source_hash": "0cc8cfc38b78b631dc1afa0631b0544a8d78281e756f1f0ca2770f50671fa818",
-    "dimensions": [
-      4168,
-      1469
+    "source_png": "artifacts/v2/tsfm_integral_survival/forecast_survival__all_tracks__noisy_levels.png",
+    "source_pdf": "artifacts/v2/tsfm_integral_survival/forecast_survival__all_tracks__noisy_levels.pdf",
+    "local_png": "assets/lorenz/forecast-survival.png",
+    "local_pdf": "assets/lorenz/forecast-survival.pdf",
+    "png_sha256": "7265920daaa5e8849ca0de68f5b8977d6ba97436eb9b22700d1758ea3151db5b",
+    "pdf_sha256": "94ded9d7cb179b16481be2b3faee6d2d588cfe0fb49907e315d47014c6b80bf0",
+    "dimensions": [4222, 1623],
+    "noise_levels": [0.001, 0.01, 0.05],
+    "information_tracks": [
+      "state_only_dynamics_learning",
+      "known_equation_form_hidden_parameters",
+      "known_physics_forward_surrogate",
+      "externally_pretrained_sequence_forecasting"
     ],
-    "inputs": {
-      "config": "6199792b7fd8da13157e8e446a0b4948082396741fd3b5f344add34a680a7db8",
-      "run_metrics": "dfffd2d42b8c04547f898211c8deb2f5b12b900e3d270a8e55fa344f012f8d93",
-      "trajectory_metrics": "af5804399565a0b6889b91c7c700c4a2f07fdc5a7d6ed4a1abe430c6090e0ddc"
-    },
-    "noise_levels": [
-      0.001,
-      0.01,
-      0.05
-    ],
-    "copied_without_modification": true
-  }
+    "copied_without_modification": true,
+    "layout": "No figure title or floating annotation; one boxed legend below the panels, partitioned into four information-track columns and containing all 16 methods."
+  },
+  "references": [
+    "docs/methods.md",
+    "docs/benchmark.md",
+    "docs/results/lorenz63_v2.md",
+    "docs/results/tsfm_integral_survival_extension.md",
+    "docs/results/weak_invariant_loss_ablation.md",
+    "docs/results/weak_invariant_experiment_walkthrough.md"
+  ]
 }
