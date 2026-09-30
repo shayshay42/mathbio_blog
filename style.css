@@ -32,7 +32,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .site-nav { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 14px; }
 .site-nav a { white-space: nowrap; }
 .site-nav [aria-current="page"] { color: var(--ink); }
-.intro { display: grid; grid-template-columns: minmax(0, 1fr) 260px; align-items: center; gap: 30px; margin: 22px 0 47px; }
+.intro { display: grid; grid-template-columns: 240px minmax(0, 1fr); align-items: center; gap: 30px; margin: 32px 0 47px; }
+.notebook-desk { display: grid; grid-template-columns: minmax(0, 1fr) 260px; align-items: center; gap: 30px; }
 .intro-copy { padding-bottom: 6px; }
 .intro-copy p + p { margin-top: 18px; color: var(--muted); }
 .desk-object { min-width: 0; }
@@ -140,6 +141,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   .page { width: calc(100% - 44px); margin-top: 38px; }
   .site-header { flex-wrap: wrap; gap: 10px 20px; }
   .intro { grid-template-columns: 1fr; gap: 12px; margin: 30px 0 35px; }
+  .notebook-desk { grid-template-columns: 1fr; gap: 22px; }
   .intro-copy { padding: 0; }
   .desk-object { width: min(260px, 100%); justify-self: center; }
   #research, #talks { margin-top: 36px; }

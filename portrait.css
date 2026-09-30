@@ -1,0 +1,96 @@
+.portrait-link {
+  display: block;
+  width: min(100%, 240px);
+  justify-self: center;
+  color: inherit;
+  text-decoration: none;
+  border-radius: 18px;
+}
+.portrait-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+.portrait-view {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  perspective: 750px;
+  perspective-origin: 50% 45%;
+}
+.portrait-scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--portrait-x, 0deg)) rotateY(var(--portrait-y, 0deg));
+}
+.portrait-view.is-tilting .portrait-scene { will-change: transform; }
+.portrait-person {
+  position: absolute;
+  display: block;
+  width: 84%;
+  height: 88%;
+  left: 50%;
+  bottom: 5%;
+  object-fit: contain;
+  object-position: center bottom;
+  transform: translateX(-50%) translateZ(16px);
+  pointer-events: none;
+  user-select: none;
+}
+.portrait-shadow {
+  position: absolute;
+  left: 22%;
+  bottom: 2%;
+  width: 56%;
+  height: 8%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #46554919, #46554906 48%, transparent 72%);
+  transform: translateZ(-24px);
+  pointer-events: none;
+}
+.portrait-math {
+  position: absolute;
+  display: block;
+  width: 22%;
+  height: 22%;
+  color: #6e8173;
+  opacity: .72;
+  pointer-events: none;
+  user-select: none;
+}
+.portrait-math--derivative {
+  top: 12%;
+  left: 0;
+  width: 24%;
+  height: 24%;
+  transform: translateZ(30px) rotate(-10deg);
+}
+.portrait-math--sigma {
+  top: 2%;
+  right: 4%;
+  width: 18%;
+  height: 18%;
+  color: var(--accent, #386348);
+  opacity: .48;
+  transform: translateZ(24px) rotate(9deg);
+}
+.portrait-math--gradient {
+  bottom: 15%;
+  left: 1%;
+  width: 17%;
+  height: 17%;
+  opacity: .56;
+  transform: translateZ(20px) rotate(8deg);
+}
+.portrait-math--graph {
+  right: -1%;
+  bottom: 14%;
+  width: 25%;
+  height: 25%;
+  transform: translateZ(36px) rotate(7deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .portrait-scene { transform: none; }
+  .portrait-view.is-tilting .portrait-scene { will-change: auto; }
+}

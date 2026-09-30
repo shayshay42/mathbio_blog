@@ -43,6 +43,8 @@ Visit http://localhost:4173. No build or npm install is required. Typography use
 
 - `index.html`: biography, research links, note list, project cards, and sharpener viewer.
 - `style.css`: layout, typography, responsive rules, enamel palette.
+- `portrait-viewer.js`, `portrait.css`: subtle CSS depth and pointer/focus tilt for the homepage portrait, with reduced-motion support.
+- `assets/portrait/`: generated portrait, decorative chalk vectors, and image-generation prompts. The portrait links to LinkedIn and works without JavaScript or WebGL.
 - `publications.html`: preprints, manuscripts and their status, archive links, and research code.
 - `assets/publications.bib`: full-author BibTeX citations for the five listed works.
 - `assets/cv/`: downloadable English and French CVs, with editable LaTeX sources in `source/`.
@@ -154,3 +156,5 @@ The browser acceptance suite uses Playwright and a running local server. Install
 ```sh
 PLAYWRIGHT_MODULE=/path/to/tools/node_modules/playwright/index.mjs BROWSER_CHANNEL=chrome node --test tests/molecular-browser.test.mjs
 ```
+
+Use the same setup with `tests/portrait-browser.test.mjs` to check portrait tilt, keyboard navigation, reduced motion, responsive layout, and JavaScript/WebGL fallbacks.

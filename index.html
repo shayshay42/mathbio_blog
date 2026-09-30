@@ -8,9 +8,11 @@
   <title>Shayan Hajhashemi — Notes</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="portrait.css">
   <script src="theme.js" defer></script>
   <script src="sharpener-viewer.js" type="module"></script>
   <script src="project-viewer.js" type="module"></script>
+  <script src="portrait-viewer.js" type="module"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -30,11 +32,46 @@
 
     <main id="main">
       <div class="intro">
+        <a class="portrait-link" href="https://ca.linkedin.com/in/hshay" aria-label="Shayan Hajhashemi on LinkedIn">
+          <div class="portrait-view">
+            <div class="portrait-scene">
+              <span class="portrait-shadow" aria-hidden="true"></span>
+              <img class="portrait-person" src="assets/portrait/shayan-3d.png" width="1254" height="1254" alt="A sculpted-style portrait of Shayan, with curly hair, a short beard, and a blue fleece." fetchpriority="high" decoding="async">
+              <svg class="portrait-math portrait-math--derivative" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><use href="assets/portrait/chalk-math.svg#derivative"></use></svg>
+              <svg class="portrait-math portrait-math--sigma" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><use href="assets/portrait/chalk-math.svg#sigma"></use></svg>
+              <svg class="portrait-math portrait-math--gradient" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><use href="assets/portrait/chalk-math.svg#gradient"></use></svg>
+              <svg class="portrait-math portrait-math--graph" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><use href="assets/portrait/chalk-math.svg#graph"></use></svg>
+            </div>
+          </div>
+        </a>
         <div class="intro-copy">
           <p>I’m a PhD student in Quantitative Life Sciences at McGill, supervised by <a href="https://morgancraiglab.com/about">Morgan Craig</a> and <a href="https://www.ece.mcgill.ca/~aemad2/">Amin Emad</a>. I work on nonlinear dynamics and scientific machine learning.</p>
           <p>This is a place for notes on mathematics, biology, and ideas still taking shape.</p>
           <p class="cv-downloads">CV: <a href="assets/cv/shayan-hajhashemi-cv-en.pdf" hreflang="en" type="application/pdf" download>English</a> · <a href="assets/cv/shayan-hajhashemi-cv-fr.pdf" hreflang="fr" lang="fr" type="application/pdf" download>Français</a> <span class="muted">(PDF)</span></p>
         </div>
+      </div>
+
+      <div class="notebook-desk">
+        <section id="notebook" aria-labelledby="notebook-title">
+          <div class="section-heading">
+            <h2 id="notebook-title">Notes</h2>
+            <span class="muted">Work in progress</span>
+          </div>
+          <div class="entries">
+            <article class="entry">
+              <h3><a href="notes/steering-a-forecasting-model.html">Looking for a bifurcation inside an LLM</a></h3>
+              <p>Steering PANDA, looking for an oscillator, and learning a world model of the model.</p>
+            </article>
+            <article class="entry">
+              <h3><a href="notes/oil-and-learned-optimization.html">OIL, learned flows, and the search for better optimizers</a></h3>
+              <p>Learning a starting point, an update field, or a policy around the solver.</p>
+            </article>
+            <article class="entry">
+              <h3><a href="notes/weighted-weak-lorenz.html">Weak forms, weighted windows, and Lorenz</a></h3>
+              <p>Noise-robust SINDy, forecast survival, and what foundation models changed.</p>
+            </article>
+          </div>
+        </section>
         <div class="desk-object">
           <div class="sharpener-view" aria-label="Carl Angel-5 pencil sharpener">
             <img class="sharpener" data-preview src="assets/angel-5-red.png" width="640" height="640" alt="A cartoon-style red Carl Angel-5 pencil sharpener, with a chrome face, rear hand crank, and clear shavings drawer.">
@@ -56,27 +93,6 @@
           </div>
         </div>
       </div>
-
-      <section id="notebook" aria-labelledby="notebook-title">
-        <div class="section-heading">
-          <h2 id="notebook-title">Notes</h2>
-          <span class="muted">Work in progress</span>
-        </div>
-        <div class="entries">
-          <article class="entry">
-            <h3><a href="notes/steering-a-forecasting-model.html">Looking for a bifurcation inside an LLM</a></h3>
-            <p>Steering PANDA, looking for an oscillator, and learning a world model of the model.</p>
-          </article>
-          <article class="entry">
-            <h3><a href="notes/oil-and-learned-optimization.html">OIL, learned flows, and the search for better optimizers</a></h3>
-            <p>Learning a starting point, an update field, or a policy around the solver.</p>
-          </article>
-          <article class="entry">
-            <h3><a href="notes/weighted-weak-lorenz.html">Weak forms, weighted windows, and Lorenz</a></h3>
-            <p>Noise-robust SINDy, forecast survival, and what foundation models changed.</p>
-          </article>
-        </div>
-      </section>
 
       <section id="projects" aria-labelledby="projects-title">
         <h2 id="projects-title">Projects</h2>
