@@ -84,7 +84,7 @@ Paths in `provenance.json` identify files in the original research workspace; th
 
 Posting dates follow bioRxiv, which differ by one day from the Mila listing for DiffDose and latent space differentiation. Author names follow deposited paper metadata; the latent-space paper lists Ali Saberi. These are labeled as preprints. Update the page and BibTeX together when adding papers or newer versions.
 
-The shared navigation links to Notes, Projects, Publications, https://mila.quebec/en/directory/shayan-hajhashemi, and GitHub.
+The shared navigation links to Notes, Projects, Publications, [Mila](https://mila.quebec/en/directory/shayan-hajhashemi), both GitHub profiles ([shayshay42](https://github.com/shayshay42) and [carlangle](https://github.com/carlangle)), and [LinkedIn](https://ca.linkedin.com/in/hshay). The homepage names supervisors [Morgan Craig](https://morgancraiglab.com/about) and [Amin Emad](https://www.ece.mcgill.ca/~aemad2/). The PANDA note is titled “Looking for a bifurcation inside an LLM”; its existing article URL is retained.
 
 ## Project cards
 
