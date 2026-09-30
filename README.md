@@ -93,7 +93,7 @@ English and French CV PDFs are linked as CV (EN/FR) in every page’s navigation
 
 The homepage and both CVs also list the invited Real-MVP talk at the 2026 SIAM Conference on the Life Sciences (LS26), July 6, 2026, in Cleveland, Ohio. Its title and MS11 minisymposium details follow the [official talk entry](https://meetings.siam.org/sess/dsp_talk.cfm?p=157552) and [session schedule](https://meetings.siam.org/sess/dsp_programsess.cfm?sessioncode=88781). Invited status was confirmed by the author.
 
-The shared navigation links to Notes, Projects, Publications, [Mila](https://mila.quebec/en/directory/shayan-hajhashemi), both GitHub profiles ([shayshay42](https://github.com/shayshay42) and [carlangle](https://github.com/carlangle)), and [LinkedIn](https://ca.linkedin.com/in/hshay). The homepage names supervisors [Morgan Craig](https://morgancraiglab.com/about) and [Amin Emad](https://www.ece.mcgill.ca/~aemad2/). The PANDA note is titled “Looking for a bifurcation inside an LLM”; its existing article URL is retained.
+The shared navigation links to Notes, Projects, Publications ([scholar](https://scholar.google.com/citations?hl=en&user=uW3aYOcAAAAJ)), [Mila](https://mila.quebec/en/directory/shayan-hajhashemi), both GitHub profiles ([shayshay42](https://github.com/shayshay42) and [carlangle](https://github.com/carlangle)), and [LinkedIn](https://ca.linkedin.com/in/hshay). The homepage names supervisors [Morgan Craig](https://morgancraiglab.com/about) and [Amin Emad](https://www.ece.mcgill.ca/~aemad2/). The PANDA note is titled “Looking for a bifurcation inside an LLM”; its existing article URL is retained.
 
 ## Project cards
 
