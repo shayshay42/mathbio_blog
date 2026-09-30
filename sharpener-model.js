@@ -78,13 +78,15 @@ export function createSharpener() {
   };
 
   // A continuous folded-metal shell avoids independent, misaligned top corners.
-  // The drawer aperture passes through this profile; a recessed rear panel closes it.
+  // Matching front and rear apertures leave the clear bin visible through the body.
   const shellProfile = roundedPath(1.41, 2.06, 0.155);
   shellProfile.holes.push(roundedPath(1.25, 0.9, 0.032, 0, -0.5, true));
   const shell = mesh(extrude(shellProfile, 1.34, 0.045), enamel, 'Continuous rounded enamel shell');
   shell.position.z = -0.67;
-  box(1.405, 2.05, 0.07, 0.155, enamel, 'Rear enamel panel', [0, 0, -0.665]);
-  box(1.18, 0.8, 0.035, 0.025, inside, 'Recessed drawer cavity', [0, -0.49, -0.51]);
+  const rearProfile = roundedPath(1.375, 2.02, 0.14);
+  rearProfile.holes.push(roundedPath(1.25, 0.9, 0.032, 0, -0.5, true));
+  const rear = mesh(extrude(rearProfile, 0.04, 0.015), enamel, 'Rear enamel frame');
+  rear.position.z = -0.685;
   box(1.15, 0.055, 1.13, 0.02, darkMetal, 'Drawer support', [0, -0.915, 0.11]);
 
   // Four low pads sit on the same plane; the shell rests directly over them.
@@ -220,7 +222,7 @@ export function createSharpener() {
   context.fillText('Angel-5', 256, 187);
   const labelTexture = new THREE.CanvasTexture(labelCanvas);
   labelTexture.colorSpace = THREE.SRGBColorSpace;
-  const labelMaterial = new THREE.MeshStandardMaterial({ map: labelTexture, transparent: true, roughness: 0.75, depthWrite: false });
+  const labelMaterial = new THREE.MeshStandardMaterial({ map: labelTexture, transparent: true, roughness: 0.75, depthWrite: false, side: THREE.DoubleSide });
   const label = mesh(new THREE.PlaneGeometry(0.72, 0.36), labelMaterial, 'CARL Angel-5 drawer mark', drawer);
   label.position.set(0, -0.713, 0.807);
   label.renderOrder = 5;

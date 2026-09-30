@@ -132,6 +132,63 @@ test('sharpener interactions and enamel browser acceptance', async t => {
       await page.close();
     });
 
+    await t.test('the rear bin window stays transparent while the upper housing stays opaque, and the bin remains clickable', async () => {
+      const page = await browser.newPage({ reducedMotion: 'reduce' });
+      await ready(page);
+      const surfaces = await page.evaluate(async base => {
+        const THREE = await import(`${base}/assets/vendor/three.module.js`);
+        const { createSharpener } = await import(`${base}/sharpener-model.js`);
+        const model = createSharpener();
+        const raycaster = new THREE.Raycaster();
+        const through = (x, y) => {
+          raycaster.set(new THREE.Vector3(x, y, -3), new THREE.Vector3(0, 0, 1));
+          return raycaster.intersectObject(model.group, true)
+            .filter(hit => hit.object.visible)
+            .map(hit => ({ name: hit.object.name, transparent: hit.object.material.transparent, opacity: hit.object.material.opacity }));
+        };
+        const results = [];
+        for (const extension of [0, 1]) {
+          model.setDrawerExtension(extension);
+          model.group.updateMatrixWorld(true);
+          results.push({
+            extension,
+            window: [-0.3, 0, 0.3].map(x => through(x, -0.4)),
+            // Offset from the opaque shaft and boss so they cannot mask a
+            // regression that makes the surrounding enamel transparent.
+            housing: through(0.35, 0.75),
+          });
+        }
+        model.group.traverse(object => {
+          object.geometry?.dispose();
+          object.material?.map?.dispose();
+          object.material?.dispose();
+        });
+        return results;
+      }, base);
+      for (const pose of surfaces) {
+        for (const ray of pose.window) {
+          assert.ok(ray.length >= 2, `window intersects both glass walls at extension ${pose.extension}`);
+          assert.equal(ray[0].name, 'Clear drawer back wall');
+          assert.ok(ray.every(surface => surface.transparent && surface.opacity < 1), `no opaque blocker in the bin window at extension ${pose.extension}`);
+        }
+        assert.ok(pose.housing.length > 0);
+        assert.match(pose.housing[0].name, /enamel/i);
+        assert.equal(pose.housing[0].transparent, false);
+        assert.equal(pose.housing[0].opacity, 1);
+      }
+      await page.locator(canvas).focus();
+      for (let i = 0; i < 13; i++) await page.keyboard.press('ArrowRight');
+      await settled(page);
+      const rearYaw = 0.72 + 13 * 0.18;
+      for (const open of [true, false]) {
+        const point = await partPoint(page, 'drawer', { yaw: rearYaw });
+        await page.mouse.click(point.x, point.y);
+        await expectState(page, 'drawerOpen', open);
+        await settled(page);
+      }
+      await page.close();
+    });
+
     await t.test('rear crank responds to direct clicks from the default view and after orbiting', async () => {
       const page = await browser.newPage();
       await ready(page);
