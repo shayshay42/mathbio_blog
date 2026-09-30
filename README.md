@@ -52,7 +52,7 @@ Visit http://localhost:4173. No build or npm install is required. Typography use
 - `project-models.js`: original 3D adaptations of the Read the Room and Rizome marks, plus the molecular glider logo.
 - `project-viewer.js`: lazy, on-demand logo rendering and pointer/focus tilt.
 - `assets/projects/`: rendered logo previews for loading, no-JavaScript, and no-WebGL views.
-- `theme.js`: shared enamel theme, persisted across the homepage, articles, and publications.
+- `theme.js`: shared enamel theme and matching sweater colors, with the choice persisted across the site.
 - `notes/weighted-weak-lorenz.html`: research entry with verified Lorenz63 methods and core SINDy results.
 - `notes/steering-a-forecasting-model.html`: short exploratory PANDA research note, with three figures and an open-ended conclusion.
 - `assets/panda-steering/`: compact saved figure data, source provenance, four PNG/PDF panels, and a figure-regeneration script.
@@ -109,7 +109,7 @@ Click either black top holder or the chrome face to slide the pencil clamp forwa
 
 Drag the model to rotate it, or focus it and use the arrow keys. Home resets the view; H toggles the holder, B toggles the bin, and Enter or Space turns the crank. A drag never activates the part it started on, and vertical touch movement still scrolls the page. Reduced-motion mode opens parts instantly and advances the crank one step. The scene renders on demand and stays still when idle.
 
-Red, blue, black, and green enamel choices persist across the site. Only painted model parts change color; the notebook uses the corresponding accent. Each color has a matching static preview when WebGL is unavailable. The PNG previews and exported GLB are regenerated from the same model. Direct-part interaction and fallback checks run with the browser-test setup below, using `tests/sharpener-browser.test.mjs`.
+Red, blue, black, and green enamel choices persist across the site. The picker colors the sharpener’s painted parts, the notebook accent, and the portrait’s fleece. Blue restores the original photograph; the other sweater colors preserve its fabric texture, face, and details. Each sharpener color has a matching static preview when WebGL is unavailable. The PNG previews and exported GLB are regenerated from the same model. Direct-part interaction and fallback checks run with the browser-test setup below, using `tests/sharpener-browser.test.mjs`.
 
 The model uses one rounded shell with a drawer opening, an aligned bowed chrome face, short feed tabs, four low rubber pads, and a flat rear crank with a ribbed grip. The clamp moves forward 0.5 model units; the bin moves 0.7 units, carrying its label and shavings. The motion follows the [CARL loading instructions](https://www.carlmfg.com/faq/pencil-sharpener). The fallback PNGs use the same geometry, view, and lighting; regenerate them when the model changes. The GLB is an export for editing in other 3D tools; the homepage generates geometry directly from `sharpener-model.js`.
 
