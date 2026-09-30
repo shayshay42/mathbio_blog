@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="style.css">
   <script src="theme.js" defer></script>
   <script src="script.js" defer></script>
+  <script src="sharpener-viewer.js" type="module"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -26,7 +27,14 @@
           <p>This is a place for notes on mathematics, biology, and ideas still taking shape.</p>
         </div>
         <div class="desk-object">
-          <img class="sharpener" src="assets/angel-5.svg" width="520" height="520" alt="An original illustration of a red Carl Angel-5 pencil sharpener, with a chrome face, hand crank, and clear shavings drawer.">
+          <div class="sharpener-view" aria-label="Carl Angel-5 pencil sharpener">
+            <img class="sharpener" data-preview src="assets/angel-5-red.png" width="640" height="640" alt="A cartoon-style red Carl Angel-5 pencil sharpener, with a chrome face, rear hand crank, and clear shavings drawer.">
+          </div>
+          <div class="sharpener-controls" hidden>
+            <span aria-hidden="true">Drag to rotate</span>
+            <button type="button" class="turn-handle">Turn handle</button>
+          </div>
+          <span id="sharpener-help" class="visually-hidden">Drag to rotate the model. Use arrow keys to rotate, Home to reset the view, or Enter to turn the handle.</span>
           <div class="enamel-picker" role="group" aria-label="Choose an enamel color">
             <span>Enamel</span>
             <button type="button" class="swatch red" data-enamel="red" aria-label="Red enamel" aria-pressed="true"></button>

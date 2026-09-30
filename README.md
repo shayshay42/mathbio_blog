@@ -1,6 +1,6 @@
 # Shayan’s research notebook
 
-A minimal, responsive personal researcher blog inspired by the Carl Angel-5 pencil sharpener. A simple page brings together a short bio, research links, and sample notes. White paper, restrained typography, an enamel palette, and the original SVG sharpener give the page its character.
+A minimal, responsive personal researcher blog inspired by the Carl Angel-5 pencil sharpener. A simple page brings together a short bio, research links, and sample notes. White paper, restrained typography, an enamel palette, and an original cartoon-style 3D sharpener give the page its character.
 
 ## Continue on another machine
 
@@ -16,23 +16,23 @@ Open http://localhost:4173. The Lorenz article is at http://localhost:4173/notes
 
 The PANDA exploration is at http://localhost:4173/notes/steering-a-forecasting-model.html. It follows activation steering, a search for an oscillatory bifurcation, and an SMWM-inspired model of activation dynamics. Its three figures distinguish a separate toy system, an actual PANDA noise-to-cycle forecast edit, and measured control results.
 
-Keep the agreed design: white paper, one font at two text sizes, minimal sections, the Carl Angel-5 illustration, and red/blue/black enamel choices. The Lorenz note now uses the provenance-matched extended figure with integral-matching Lorenz, Panda, and Chronos-T5, and records the later weak-loss Panda-to-SINDy experiment. The three remaining sample notes are placeholders.
+Keep the agreed design: white paper, one font at two text sizes, minimal sections, the Carl Angel-5 model, and red/blue/black enamel choices. The Lorenz note now uses the provenance-matched extended figure with integral-matching Lorenz, Panda, and Chronos-T5, and records the later weak-loss Panda-to-SINDy experiment. The three remaining sample notes are placeholders.
 
 Future commits can be shared with `git push`. Keep deployment disabled until it is explicitly requested.
 
 ## Preview
 
-Open `index.html` in a browser, or serve this directory:
+Serve this directory to use the interactive 3D model:
 
 ```sh
 python3 -m http.server 4173 --bind 127.0.0.1
 ```
 
-Visit http://localhost:4173. No build or npm install is required. Typography uses Google Fonts, with local fallbacks when offline.
+Visit http://localhost:4173. No build or npm install is required. Typography uses Google Fonts, with local fallbacks when offline. Three.js is pinned and included locally. Opening `index.html` directly, disabling JavaScript, or using a browser without WebGL shows a rendered still of the same model.
 
 ## Editing
 
-- `index.html`: biography, research links, note list, and sharpener illustration.
+- `index.html`: biography, research links, note list, and sharpener viewer.
 - `style.css`: layout, typography, responsive rules, enamel palette.
 - `script.js`: sample note bodies and accessible note dialog.
 - `theme.js`: shared enamel theme, persisted across the homepage and article.
@@ -46,13 +46,25 @@ Visit http://localhost:4173. No build or npm install is required. Typography use
 - `assets/lorenz/survival-extension.csv`: exact integral-matching, Panda, and Chronos summary values used in the extended figure discussion.
 - `assets/lorenz/conditioner-results.csv`: exact source-gate and reserved-Lorenz values from the weak/Birkhoff conditioner study.
 - `assets/lorenz/provenance.json`: source hash, extraction scope, and references.
-- `assets/angel-5.svg`: original editable vector illustration.
+- `sharpener-model.js`: editable 3D geometry and enamel materials; the crank is a separate rotating group.
+- `sharpener-viewer.js`: studio lighting, pointer/keyboard controls, on-demand rendering, and WebGL fallback.
+- `assets/angel-5.glb`: portable red model, including the drawer label and separate crank parts.
+- `assets/angel-5-{red,blue,black}.png`: rendered fallback images of the model.
+- `tools/export-sharpener.html`: open through the local server to export a fresh GLB after editing the geometry.
+- `assets/vendor/THREE-README.md`: renderer version, source, build command, and license.
+- `assets/angel-5.svg`: earlier editable vector illustration, retained for reference.
 
 The Lorenz, PANDA, and OIL entries are research drafts grounded in saved experimental results and local evidence. The other three entries are original sample copy, explicitly labeled as samples; replace them before publishing. The enamel controls switch between red, blue, and black and save the choice in the browser. Sample notes open in a dialog; the research entries have standalone HTML pages. Article text works without JavaScript; the OIL equations remain readable LaTeX source until the local renderer runs.
 
 The article uses the extended three-panel survival plot copied unchanged from `artifacts/v2/tsfm_integral_survival/forecast_survival__all_tracks__noisy_levels.png`; a matching PDF is included. Its PNG and PDF SHA256 hashes were verified against the source result manifest. The title-free plot uses one boxed legend, partitioned into four information-track columns and containing all 16 methods. The post explicitly separates state-only dynamics learning, known-form parameter estimation, exact-physics surrogates, externally pretrained forecasting, and the later amortized Panda-to-SINDy experiment.
 
 Paths in `provenance.json` identify files in the original research workspace; they are provenance references, not website dependencies.
+
+## Sharpener controls
+
+Drag the model to rotate it, or focus it and use the arrow keys. Home resets the view; Enter, Space, or **Turn handle** turns the rear crank. Enamel controls change only the painted parts. The scene renders on demand and remains still when idle. Reduced-motion mode advances the crank one step without animation. On phones, vertical touch movement still scrolls the page.
+
+The model uses one rounded shell with a drawer opening, an aligned bowed chrome face, short feed tabs, four low rubber pads, and a flat rear crank with a ribbed grip. The fallback PNGs use the same geometry, view, and lighting; regenerate them when the model changes. The GLB is an export for editing in other 3D tools; the homepage generates geometry directly from `sharpener-model.js`.
 
 ## PANDA figure regeneration
 
@@ -72,7 +84,7 @@ The research bio and interests come from https://github.com/shayshay42 . Project
 - https://github.com/shayshay42/neural_ode_benchmark
 - https://github.com/shayshay42/spatial_transcriptomics_playground
 
-Angel-5 appearance reference: https://www.carlmfg.com/angel-5-pencil-sharpener/ . The SVG is an original stylized illustration; this personal site is not affiliated with CARL.
+Angel-5 appearance reference: https://www.carlmfg.com/angel-5-pencil-sharpener/ . The 3D geometry and earlier SVG are original stylized models, not dimensioned replicas; this personal site is not affiliated with CARL.
 
 ## GitHub Pages
 
