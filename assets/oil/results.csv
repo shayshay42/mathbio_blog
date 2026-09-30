@@ -1,0 +1,8 @@
+study,cohort,n,method,trajectory_mse_valid_mean,trajectory_mse_valid_median,validity_percent,neural_calls,exact_calls_allocated,notes
+autonomous_v4,S6 selection IDs 25001-26000 fixed start0,1000,Learned autonomous actions,48292.40,165.409,98.9,20,0,Exact metric-only evaluations excluded from inference
+autonomous_v4,S6 selection IDs 25001-26000 fixed start0,1000,Exact trust teacher,5346.30,153.498,100,0,21,20 validated transitions require 21 joint value-gradient calls
+autonomous_v4,S6 selection IDs 25001-26000 fixed start0,1000,Direct endpoint predictor,5542.80,165.297,100,1,0,Same teacher endpoint and matched model capacity
+region_continuation,S6 exposed engineering subset of IDs 25001-26000,48,Canonical start plus B32,701.289,1.3036,100,0,32,Single exact tail
+region_continuation,S6 exposed engineering subset of IDs 25001-26000,48,Flow endpoint plus B32,115.618,0.2287,100,20,32,Single exact tail
+region_continuation,S6 exposed engineering subset of IDs 25001-26000,48,Direct endpoint plus B32,13.904,0.0572,100,1,32,Single exact tail
+region_continuation,S6 exposed engineering subset of IDs 25001-26000,48,Four flow waypoints with B8 each,5030.961,123.6577,100,20,32,Four tails sharing total allocation and learned rollout

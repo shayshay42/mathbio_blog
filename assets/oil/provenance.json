@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "prepared": "2026-09-29",
+  "article": "../../notes/oil-and-learned-optimization.html",
+  "status": "Local research draft; not deployed",
+  "source_path_base": "C:/Users/shaya",
+  "source_paths_are_website_dependencies": false,
+  "metrics": {
+    "trajectory": "Arithmetic mean and median among valid exact replays; no synthetic failure penalty.",
+    "validity": "All requested systems remain in the denominator.",
+    "parameter": "The prose labels pooled versus mean-per-system RMSE.",
+    "compute": "Neural, exact joint calls, and metric-only evaluations have distinct ledgers."
+  },
+  "sources": [
+    {
+      "path": "oil-matching/docs/GFM_INVESTIGATION_SUMMARY.md",
+      "sha256": "53642d612b7b2d497ddbf962e7afb400c97fafd2a3967c7296eca4fa1d86d13b",
+      "use": "GFM and autonomous-v4 results; older external OIL ranking is superseded below."
+    },
+    {
+      "path": "oil-matching/docs/LEARNED_DYNAMICS_OPTIMIZATION_MASTER.md",
+      "sha256": "4f13fc83ce1e04d145e5de498abf9f53869bb588a1738ca593a70356f3cc26ce",
+      "use": "Corrected method identities, authenticated full-cohort OIL/FT comparison and synthesis."
+    },
+    {
+      "path": "oil-matching/docs/GFM_REGION_CONTINUATION_BENCHMARK.md",
+      "sha256": "84d17a2dc071b08c0c905c32c5ffe313cedd1fa88431fda3fb1486d89e3051c8",
+      "use": "N48 learned-region table and candidate correlation."
+    },
+    {
+      "path": "oil-matching/docs/LEARNED_OPTIMIZER_INVESTIGATION_SUMMARY.md",
+      "sha256": "bf9512ded84bb43a00288f4bb948b2880bc9fee0adf0faf53747d3bd5bdd4338",
+      "use": "Matched-call recurrent controller comparison."
+    },
+    {
+      "path": "oil-matching/docs/LORENZ63_RL_RESTART_PREFLIGHT_V1.md",
+      "sha256": "96ab323bef1a0cebd959e5bc4ed2ca3e2a740e0ee6b5aedbed04ea55a42a8ca4",
+      "use": "Completed contextual-value preflight, no sequential RL claim."
+    },
+    {
+      "path": "oil-matching/docs/GLV_SPARSE_NOISY_BENCHMARK_V2_RESULTS.md",
+      "sha256": "1d6e06a4b0baae57612d93cd5d9c499412eb1c058a632e5fa46fde0aa2abe161",
+      "use": "Sparse/noisy restart-controller gate."
+    },
+    {
+      "path": "oil-matching/docs/GLV_GLOBAL_LOCAL_DIAGNOSTIC_V2_RESULTS.md",
+      "sha256": "ceb53b0c9584b3a82ef7cc2c76b5ba36a5a589ae9b7caff9df170b7cc3e2ee1d",
+      "use": "Validation-only posterior versus deterministic proposal comparison."
+    },
+    {
+      "path": "oil-matching/docs/SAR_FOLLOWUP_PAPER_OUTLINE.md",
+      "sha256": "13958ef99bbe1cbde67e949ce71140bca2088b4fa19d2fe39ef1c685ff8eeafe",
+      "use": "Planning status and explicit weak inverse regularization."
+    },
+    {
+      "path": "oil-matching/docs/LORENZ63_ADJOINT_MATCHING_PILOT.md",
+      "sha256": "8b45f05d79964a07acf9abf61e5d901bf898f411524fc9524e94c0e4d9793f9f",
+      "use": "Bounded deterministic adaptation and its limitations."
+    },
+    {
+      "path": "PINO-gLV-NeurIPS-Revision/05-paper/ICLR-2027-OIL-current/iclr_2027.tex",
+      "sha256": "6ad155ae2ce045b4ad58a0458d937f4b69b15e5260952fcc1bcfd664ed021d88",
+      "use": "Current OIL objective and separate inference procedure."
+    }
+  ],
+  "assets": [
+    {
+      "path": "optimizer-landscape.png",
+      "sha256": "bbe140a1c3df915b3f74876de183918a359f45ab9eb1a2af8ecbbedd15d09749",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "results.csv",
+      "sha256": "4b9fa1feba25c718c26903dac1490494f107e2efd2ad57ecd052528ce6ec196b"
+    },
+    {
+      "path": "evidence.md",
+      "sha256": "1ff14080cac727a91d510ed4262acc765be3544aef71fa98d4be84ff63b10886"
+    },
+    {
+      "path": "image-prompt.txt",
+      "sha256": "78e441265a8e3cfa62a7a4e67d51e542bce1a92cc70146ffb9a4a77305e3825e"
+    }
+  ],
+  "illustration": {
+    "method": "Built-in image_gen, text-to-image",
+    "scientific_status": "Conceptual illustration, not a measured loss or vector field",
+    "reference_role": "User-provided reference informed conceptual design; no reference pixels used",
+    "prompt_path": "image-prompt.txt",
+    "prompt": "Use case: scientific-educational.\nAsset type: original hero illustration for a white-paper mathematics/biology research notebook blog, landscape 3:2 composition.\nPrimary request: A clean elegant three-dimensional optimization loss landscape, in the spirit of an academic scientific illustration. On a pure white background, a softly shaded light-gray continuous undulating surface with subtle gray wireframe grid has two curving valleys and a few smooth hills. Oblique view from above; enough depth to read the valleys clearly. A charcoal curving local-optimizer trajectory with about seven medium gray circular iterate markers descends from an upper slope and bends along a valley. Small black arrowheads on this path indicate its local forward direction. From four intermediate gray nodes, distinct cobalt-blue arrows show alternative longer learned proposals toward a favorable basin. Blue proposals are a conceptual overlay, not certified downhill gradients. Keep all arrows visually attached to the landscape, crisp and legible, with blue as the only saturated color. One blue arrow can cut across the curve as a proposal while black path visibly winds. Three simple fine charcoal coordinate axes at the edge, with arrowheads but NO labels, NO text, NO numbers, NO legends, NO title. Spacious composition, white margins, restrained scientific editorial style, subtly sculptural gray surface, soft ambient shadows, high readability at blog width. No robots, no human figures, no brain icons, no decorative formulas, no watermark. Original composition; this is an explanatory schematic, not a data plot.",
+    "original_generated_file": "C:/Users/shaya/.codex/generated_images/019fc497-0aa5-7a61-a344-9963a6729d7e/exec-1ae02077-971d-4f46-86a9-d629795c3766.png"
+  },
+  "claim_corrections": [
+    "Older external row labeled OIL was identified as trajectory-fine-tuned MPNN plus TM; that ranking is not reused.",
+    "OIL-matching is a research-line name, not one standardized published algorithm.",
+    "Author-supplied discovery chronology: the inverse-problem derivations preceded encountering the related Gradient Flow Matching literature on neural-network optimization; no publication-priority claim is made.",
+    "Sequential solver-action RL is proposed; contextual-value preflights are completed negative results.",
+    "New presentation does not retroactively change historical selection gates."
+  ]
+}

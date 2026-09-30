@@ -12,7 +12,7 @@ cd mathbio_blog
 python3 -m http.server 4173 --bind 127.0.0.1
 ```
 
-Open http://localhost:4173. The Lorenz article is at http://localhost:4173/notes/weighted-weak-lorenz.html. All website assets and the displayed results are included in this repository; the original research workspace is not needed to view or edit the site.
+Open http://localhost:4173. The Lorenz article is at http://localhost:4173/notes/weighted-weak-lorenz.html. The OIL article is at http://localhost:4173/notes/oil-and-learned-optimization.html. All website assets and the displayed results are included in this repository; the original research workspace is not needed to view or edit the site.
 
 The PANDA exploration is at http://localhost:4173/notes/steering-a-forecasting-model.html. It follows activation steering, a search for an oscillatory bifurcation, and an SMWM-inspired model of activation dynamics. Its three figures distinguish a separate toy system, an actual PANDA noise-to-cycle forecast edit, and measured control results.
 
@@ -39,13 +39,16 @@ Visit http://localhost:4173. No build or npm install is required. Typography use
 - `notes/weighted-weak-lorenz.html`: research entry with verified Lorenz63 methods and core SINDy results.
 - `notes/steering-a-forecasting-model.html`: short exploratory PANDA research note, with three figures and an open-ended conclusion.
 - `assets/panda-steering/`: compact saved figure data, source provenance, four PNG/PDF panels, and a figure-regeneration script.
+- `notes/oil-and-learned-optimization.html`: OIL, optimizer-field distillation, conditional flow matching, learned-region continuation, and completed RL preflights, with proposed extensions labeled separately.
+- `assets/oil/`: original generated landscape, article-local styling, table CSV, evidence notes, and source/prompt provenance. The image illustrates the idea; it is not a measured loss surface.
+- `assets/vendor/katex-0.18.9/`: pinned local math renderer, fonts, and MIT license. The OIL note uses LaTeX `\(...\)` and `\[...\]` delimiters, rendered by `assets/oil/math.js`; no CDN or installation is required.
 - `assets/lorenz/results.csv`: exact VPT estimates and 95% intervals extracted from the accepted v2 bootstrap summary.
 - `assets/lorenz/survival-extension.csv`: exact integral-matching, Panda, and Chronos summary values used in the extended figure discussion.
 - `assets/lorenz/conditioner-results.csv`: exact source-gate and reserved-Lorenz values from the weak/Birkhoff conditioner study.
 - `assets/lorenz/provenance.json`: source hash, extraction scope, and references.
 - `assets/angel-5.svg`: original editable vector illustration.
 
-The Lorenz and PANDA entries are research drafts grounded in saved experimental results. The other three entries are original sample copy, explicitly labeled as samples; replace them before publishing. The enamel controls switch between red, blue, and black and save the choice in the browser. Sample notes open in a dialog; the research entries have standalone HTML pages and work without JavaScript.
+The Lorenz, PANDA, and OIL entries are research drafts grounded in saved experimental results and local evidence. The other three entries are original sample copy, explicitly labeled as samples; replace them before publishing. The enamel controls switch between red, blue, and black and save the choice in the browser. Sample notes open in a dialog; the research entries have standalone HTML pages. Article text works without JavaScript; the OIL equations remain readable LaTeX source until the local renderer runs.
 
 The article uses the extended three-panel survival plot copied unchanged from `artifacts/v2/tsfm_integral_survival/forecast_survival__all_tracks__noisy_levels.png`; a matching PDF is included. Its PNG and PDF SHA256 hashes were verified against the source result manifest. The title-free plot uses one boxed legend, partitioned into four information-track columns and containing all 16 methods. The post explicitly separates state-only dynamics learning, known-form parameter estimation, exact-physics surrogates, externally pretrained forecasting, and the later amortized Panda-to-SINDy experiment.
 
