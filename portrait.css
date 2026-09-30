@@ -18,6 +18,9 @@
   perspective-origin: 50% 45%;
 }
 .portrait-scene {
+  --portrait-width: 84%;
+  --portrait-bottom: 5%;
+  --portrait-depth: 16px;
   position: relative;
   width: 100%;
   height: 100%;
@@ -28,25 +31,25 @@
 .portrait-person {
   position: absolute;
   display: block;
-  width: 84%;
+  width: var(--portrait-width);
   height: 88%;
   left: 50%;
-  bottom: 5%;
+  bottom: var(--portrait-bottom);
   object-fit: contain;
   object-position: center bottom;
-  transform: translateX(-50%) translateZ(16px);
+  transform: translateX(-50%) translateZ(var(--portrait-depth));
   pointer-events: none;
   user-select: none;
 }
-.portrait-shadow {
+.portrait-baseline {
   position: absolute;
-  left: 22%;
-  bottom: 2%;
-  width: 56%;
-  height: 8%;
-  border-radius: 50%;
-  background: radial-gradient(ellipse, #46554919, #46554906 48%, transparent 72%);
-  transform: translateZ(-24px);
+  left: 50%;
+  bottom: calc(var(--portrait-bottom) - 1.75px);
+  width: var(--portrait-width);
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent, #386348);
+  transform: translateX(-50%) translateZ(var(--portrait-depth));
   pointer-events: none;
 }
 .portrait-math {
@@ -74,6 +77,14 @@
   color: var(--accent, #386348);
   opacity: .48;
   transform: translateZ(-8px) rotate(9deg);
+}
+.portrait-math--pushforward {
+  top: 21%;
+  right: -3%;
+  width: 27%;
+  height: 21.6%;
+  opacity: .66;
+  transform: translateZ(12px) rotate(-6deg);
 }
 .portrait-math--gradient {
   bottom: 15%;

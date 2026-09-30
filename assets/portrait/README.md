@@ -19,6 +19,8 @@ The tool reports its mask method, crop coordinates, and source checksum. Vision 
 
 `portrait-viewer.js` adds a small pointer/focus tilt to CSS depth layers holding the photo and the vector chalk symbols in `chalk-math.svg`. The portrait links to LinkedIn. It stays static for reduced motion and touch input, and remains visible without JavaScript or WebGL.
 
+An enamel line shares the photo’s bottom edge and depth so the torso stays attached during tilt. The chalk pushforward notation `G_#p` sits below the sigma.
+
 ## Sweater colors
 
 The enamel picker also controls the fleece. Blue uses the original `shayan-cutout.png` unchanged. Red, black, and green load the matching `shayan-cutout-{color}.png`.

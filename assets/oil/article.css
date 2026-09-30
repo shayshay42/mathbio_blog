@@ -4,8 +4,6 @@
 .oil-hero img { display: block; width: 100%; height: auto; }
 .oil-hero figcaption { margin-top: 18px; color: var(--muted); }
 .oil-contents { color: var(--muted); padding: 20px 0; border-block: 1px solid var(--line); }
-.oil-post p a, .oil-reading a { text-decoration-color: var(--line); }
-.oil-post p a:hover, .oil-reading a:hover { text-decoration-color: currentColor; }
 .oil-post .results-table table { min-width: 640px; }
 .oil-post .results-table th:first-child { min-width: 210px; }
 .oil-post .oil-reading { margin-top: 24px; }

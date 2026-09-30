@@ -16,6 +16,13 @@
         <path d="M16 13l17 18-17 19m0-37 29-1" opacity=".18" stroke-width=".75"/>
       </g>
     </symbol>
+    <symbol id="pushforward" viewBox="0 0 80 64">
+      <g fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" filter="url(#chalk-grain)">
+        <!-- G with the pushforward subscript #, followed by the measure p. -->
+        <path d="M30 20c-4-5-12-5-18 1-6 6-8 17-4 22 4 5 13 3 18-2l3-10-10 1M36 39l-3 15m10-15-3 15m-9-11 14-1m-15 8 14-1M53 29l-6 27m5-17c2-8 6-13 11-12 7 2 3 14-3 17-4 2-8 0-8-4"/>
+        <path d="M11 25c-4 6-5 13-2 17m43-3 3-9" opacity=".16" stroke-width=".75"/>
+      </g>
+    </symbol>
     <symbol id="gradient" viewBox="0 0 64 64">
       <g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" filter="url(#chalk-grain)">
         <path d="M12 14c11 1 27 0 39 0L32 51 12 14Z"/>
@@ -35,6 +42,7 @@
   <!-- Standalone preview; the portrait references the individual symbols. -->
   <use href="#derivative" x="16" y="20" width="64" height="64"/>
   <use href="#sigma" x="180" y="12" width="48" height="48"/>
+  <use href="#pushforward" x="176" y="60" width="72" height="58"/>
   <use href="#gradient" x="18" y="175" width="46" height="46"/>
   <use href="#graph" x="180" y="170" width="64" height="64"/>
 </svg>
