@@ -9,7 +9,6 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
   <script src="theme.js" defer></script>
-  <script src="script.js" defer></script>
   <script src="sharpener-viewer.js" type="module"></script>
 </head>
 <body>
@@ -17,7 +16,12 @@
   <div class="page">
     <header class="site-header">
       <h1>Shayan Hajhashemi</h1>
-      <a href="https://github.com/shayshay42">GitHub <span aria-hidden="true">↗</span></a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html#notebook" aria-current="page">Notes</a>
+        <a href="publications.html">Publications</a>
+        <a href="https://mila.quebec/en/directory/shayan-hajhashemi">Mila</a>
+        <a href="https://github.com/shayshay42">GitHub <span aria-hidden="true">↗</span></a>
+      </nav>
     </header>
 
     <main id="main">
@@ -62,18 +66,6 @@
             <h3><a href="notes/weighted-weak-lorenz.html">Weak forms, weighted windows, and Lorenz</a></h3>
             <p>Noise-robust SINDy, forecast survival, and what foundation models changed.</p>
           </article>
-          <article class="entry">
-            <h3><a href="#note-small-models" data-note="small-models">What can a small model tell us?</a></h3>
-            <p>Useful simplifications and knowing what to leave out. Sample note.</p>
-          </article>
-          <article class="entry">
-            <h3><a href="#note-learning-dynamics" data-note="learning-dynamics">Learning the dynamics between the dots</a></h3>
-            <p>Inverse problems and the equations hiding in data. Sample note.</p>
-          </article>
-          <article class="entry">
-            <h3><a href="#note-good-tools" data-note="good-tools">A small case for good tools</a></h3>
-            <p>A pencil sharpener, a blank page, an unfinished thought. Sample note.</p>
-          </article>
         </div>
       </section>
 
@@ -91,10 +83,6 @@
     <footer class="site-footer"><span>A notebook in progress.</span><a href="https://www.carlmfg.com/angel-5-pencil-sharpener/">Inspired by the Carl Angel-5 <span aria-hidden="true">↗</span></a></footer>
   </div>
 
-  <dialog id="note-dialog" aria-labelledby="note-title">
-    <div class="reader-toolbar"><span class="muted">Notebook</span><button class="close-reader" type="button" aria-label="Close note">Close <span aria-hidden="true">×</span></button></div>
-    <div class="reader-body"><p class="muted" id="note-category"></p><h2 id="note-title">Note</h2><p class="reader-disclaimer">Sample text for the website draft. Not a published post.</p><div id="note-content"></div></div>
-  </dialog>
-  <noscript><p class="noscript-note">Note previews and enamel colors need JavaScript. Research links work without it.</p></noscript>
+  <noscript><p class="noscript-note">Sharpener rotation and enamel colors need JavaScript. The notes and publications remain readable.</p></noscript>
 </body>
 </html>

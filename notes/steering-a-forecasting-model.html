@@ -8,12 +8,24 @@
   <title>Looking for a bifurcation inside a forecasting model &mdash; Shayan Hajhashemi</title>
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../assets/vendor/katex-0.18.9/katex.min.css">
   <script src="../theme.js" defer></script>
+  <script src="../assets/vendor/katex-0.18.9/katex.min.js" defer></script>
+  <script src="../assets/vendor/katex-0.18.9/contrib/auto-render.min.js" defer></script>
+  <script src="../math.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="page article-page">
-    <header class="site-header article-nav"><a href="../index.html">Shayan Hajhashemi</a><a href="../index.html#notebook">Back to notes <span aria-hidden="true">&nearr;</span></a></header>
+    <header class="site-header article-nav">
+      <a href="../index.html">Shayan Hajhashemi</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="../index.html#notebook">Notes</a>
+        <a href="../publications.html">Publications</a>
+        <a href="https://mila.quebec/en/directory/shayan-hajhashemi">Mila</a>
+        <a href="https://github.com/shayshay42">GitHub</a>
+      </nav>
+    </header>
     <main id="main">
       <article class="blog-post panda-post">
         <header class="post-header"><p class="muted">Research note &middot; Draft &middot; September 2026</p><h1>Looking for a bifurcation inside a forecasting model</h1></header>
@@ -32,9 +44,11 @@
 
         <section aria-labelledby="steering-title">
           <h2 id="steering-title">A cycle in PANDA&rsquo;s forecast</h2>
-          <p>Activation steering gives us a candidate knob. Keep the weights and input fixed, intercept an internal activation <i>h</i>, and add a vector:</p>
-          <p class="post-equation" role="math" aria-label="h edited equals h plus alpha times v">h<sub>edited</sub> = h + &alpha;v.</p>
-          <p>The direction <i>v</i> specifies the edit; &alpha; sets its strength. A Jacobian measures how the forecast responds to a small edit. On simple sinusoidal inputs, input-specific Jacobian directions shifted forecast frequency by roughly 1% in either requested direction across all 96 tested cases. That encouraged a harder question: could a shared direction make a noise context produce a cycle?</p>
+          <p>Activation steering gives us a candidate knob. Keep the weights and input fixed, intercept an internal activation \(h\), and add a vector:</p>
+          <div class="math-display" tabindex="0" role="region" aria-label="Activation steering update">
+            \[h_{\mathrm{edited}}=h+\alpha v.\]
+          </div>
+          <p>The direction \(v\) specifies the edit; \(\alpha\) sets its strength. A Jacobian measures how the forecast responds to a small edit. On simple sinusoidal inputs, input-specific Jacobian directions shifted forecast frequency by roughly 1% in either requested direction across all 96 tested cases. That encouraged a harder question: could a shared direction make a noise context produce a cycle?</p>
           <figure class="research-figure panda-figure">
             <a href="../assets/panda-steering/panda-cycle.png" target="_blank" rel="noopener" aria-label="Open the full-size PANDA cycle example"><img src="../assets/panda-steering/panda-cycle.png" width="1280" height="880" loading="lazy" decoding="async" alt="The same white-noise input leads to a nearly flat unedited PANDA forecast and a clean four-cycle waveform after the final-head activation edit."></a>
             <figcaption>Actual PANDA forecasts for the fixed first white-noise example, channel 0. The input is unchanged; its final 128 samples are shown. The H8 edit has strength 2 and acts through the linear output head. <a href="../assets/panda-steering/panda-cycle.pdf" download>PDF</a></figcaption>

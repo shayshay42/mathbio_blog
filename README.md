@@ -1,6 +1,6 @@
 # Shayan’s research notebook
 
-A minimal, responsive personal researcher blog inspired by the Carl Angel-5 pencil sharpener. A simple page brings together a short bio, research links, and sample notes. White paper, restrained typography, an enamel palette, and an original cartoon-style 3D sharpener give the page its character.
+A minimal, responsive personal researcher blog inspired by the Carl Angel-5 pencil sharpener. A simple page brings together a short bio, research links, three full blog posts, and publications. White paper, restrained typography, an enamel palette, and an original cartoon-style 3D sharpener give the page its character.
 
 ## Continue on another machine
 
@@ -16,7 +16,7 @@ Open http://localhost:4173. The Lorenz article is at http://localhost:4173/notes
 
 The PANDA exploration is at http://localhost:4173/notes/steering-a-forecasting-model.html. It follows activation steering, a search for an oscillatory bifurcation, and an SMWM-inspired model of activation dynamics. Its three figures distinguish a separate toy system, an actual PANDA noise-to-cycle forecast edit, and measured control results.
 
-Keep the agreed design: white paper, one font at two text sizes, minimal sections, the Carl Angel-5 model, and red/blue/black enamel choices. The Lorenz note now uses the provenance-matched extended figure with integral-matching Lorenz, Panda, and Chronos-T5, and records the later weak-loss Panda-to-SINDy experiment. The three remaining sample notes are placeholders.
+Keep the agreed design: white paper, one font at two text sizes, minimal sections, the Carl Angel-5 model, and red/blue/black enamel choices. The Lorenz note now uses the provenance-matched extended figure with integral-matching Lorenz, Panda, and Chronos-T5, and records the later weak-loss Panda-to-SINDy experiment. The notebook contains the three full research entries; the sample posts and their dialog have been removed.
 
 Future commits can be shared with `git push`. Keep deployment disabled until it is explicitly requested.
 
@@ -34,14 +34,16 @@ Visit http://localhost:4173. No build or npm install is required. Typography use
 
 - `index.html`: biography, research links, note list, and sharpener viewer.
 - `style.css`: layout, typography, responsive rules, enamel palette.
-- `script.js`: sample note bodies and accessible note dialog.
-- `theme.js`: shared enamel theme, persisted across the homepage and article.
+- `publications.html`: verified bioRxiv preprints, archive links, and research code.
+- `assets/publications.bib`: full-author BibTeX citations for the listed preprints.
+- `math.js`: shared LaTeX rendering for all `.blog-post` articles.
+- `theme.js`: shared enamel theme, persisted across the homepage, articles, and publications.
 - `notes/weighted-weak-lorenz.html`: research entry with verified Lorenz63 methods and core SINDy results.
 - `notes/steering-a-forecasting-model.html`: short exploratory PANDA research note, with three figures and an open-ended conclusion.
 - `assets/panda-steering/`: compact saved figure data, source provenance, four PNG/PDF panels, and a figure-regeneration script.
 - `notes/oil-and-learned-optimization.html`: OIL, optimizer-field distillation, conditional flow matching, learned-region continuation, and completed RL preflights, with proposed extensions labeled separately.
 - `assets/oil/`: original generated landscape, article-local styling, table CSV, evidence notes, and source/prompt provenance. The image illustrates the idea; it is not a measured loss surface.
-- `assets/vendor/katex-0.18.9/`: pinned local math renderer, fonts, and MIT license. The OIL note uses LaTeX `\(...\)` and `\[...\]` delimiters, rendered by `assets/oil/math.js`; no CDN or installation is required.
+- `assets/vendor/katex-0.18.9/`: pinned local math renderer, fonts, and MIT license. All three blogs use LaTeX `\(...\)` and `\[...\]` delimiters, rendered by the shared `math.js`; no CDN or installation is required.
 - `assets/lorenz/results.csv`: exact VPT estimates and 95% intervals extracted from the accepted v2 bootstrap summary.
 - `assets/lorenz/survival-extension.csv`: exact integral-matching, Panda, and Chronos summary values used in the extended figure discussion.
 - `assets/lorenz/conditioner-results.csv`: exact source-gate and reserved-Lorenz values from the weak/Birkhoff conditioner study.
@@ -54,11 +56,23 @@ Visit http://localhost:4173. No build or npm install is required. Typography use
 - `assets/vendor/THREE-README.md`: renderer version, source, build command, and license.
 - `assets/angel-5.svg`: earlier editable vector illustration, retained for reference.
 
-The Lorenz, PANDA, and OIL entries are research drafts grounded in saved experimental results and local evidence. The other three entries are original sample copy, explicitly labeled as samples; replace them before publishing. The enamel controls switch between red, blue, and black and save the choice in the browser. Sample notes open in a dialog; the research entries have standalone HTML pages. Article text works without JavaScript; the OIL equations remain readable LaTeX source until the local renderer runs.
+The Lorenz, PANDA, and OIL entries are research drafts grounded in saved experimental results and local evidence. The enamel controls switch between red, blue, and black and save the choice in the browser. Each research entry has a standalone HTML page. Article text works without JavaScript; equations remain readable LaTeX source until the local renderer runs. Shared math styles keep display equations horizontally scrollable on narrow screens and KaTeX provides accessible MathML.
 
 The article uses the extended three-panel survival plot copied unchanged from `artifacts/v2/tsfm_integral_survival/forecast_survival__all_tracks__noisy_levels.png`; a matching PDF is included. Its PNG and PDF SHA256 hashes were verified against the source result manifest. The title-free plot uses one boxed legend, partitioned into four information-track columns and containing all 16 methods. The post explicitly separates state-only dynamics learning, known-form parameter estimation, exact-physics surrogates, externally pretrained forecasting, and the later amortized Panda-to-SINDy experiment.
 
 Paths in `provenance.json` identify files in the original research workspace; they are provenance references, not website dependencies.
+
+## Publications and profile
+
+`publications.html` lists three verified bioRxiv preprints, newest first, with full citations in `assets/publications.bib`. Metadata was checked on September 30, 2026 against the bioRxiv API and publisher-deposited Crossref records:
+
+- Immune phenotype: https://api.crossref.org/works/10.64898/2026.09.17.752366
+- DiffDose: https://api.crossref.org/works/10.64898/2026.09.07.749974
+- Latent space differentiation: https://api.crossref.org/works/10.64898/2026.03.04.709512
+
+Posting dates follow bioRxiv, which differ by one day from the Mila listing for DiffDose and latent space differentiation. Author names follow deposited paper metadata; the latent-space paper lists Ali Saberi. These are labeled as preprints. Update the page and BibTeX together when adding papers or newer versions.
+
+The shared navigation links to Notes, Publications, https://mila.quebec/en/directory/shayan-hajhashemi, and GitHub.
 
 ## Sharpener controls
 

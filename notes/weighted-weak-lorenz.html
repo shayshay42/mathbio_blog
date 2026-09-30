@@ -8,12 +8,24 @@
   <title>Weak forms, weighted windows, and Lorenz &mdash; Shayan Hajhashemi</title>
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../assets/vendor/katex-0.18.9/katex.min.css">
   <script src="../theme.js" defer></script>
+  <script src="../assets/vendor/katex-0.18.9/katex.min.js" defer></script>
+  <script src="../assets/vendor/katex-0.18.9/contrib/auto-render.min.js" defer></script>
+  <script src="../math.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="page article-page">
-    <header class="site-header article-nav"><a href="../index.html">Shayan Hajhashemi</a><a href="../index.html#notebook">Back to notes <span aria-hidden="true">&nearr;</span></a></header>
+    <header class="site-header article-nav">
+      <a href="../index.html">Shayan Hajhashemi</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="../index.html#notebook">Notes</a>
+        <a href="../publications.html">Publications</a>
+        <a href="https://mila.quebec/en/directory/shayan-hajhashemi">Mila</a>
+        <a href="https://github.com/shayshay42">GitHub</a>
+      </nav>
+    </header>
     <main id="main">
       <article class="blog-post">
         <header class="post-header"><p class="muted">Research note &middot; Draft &middot; Updated September 2026</p><h1>Weak forms, weighted windows, and Lorenz</h1></header>
@@ -27,20 +39,31 @@
 
         <section aria-labelledby="setup-title">
           <h2 id="setup-title">The benchmark</h2>
-          <p>The reference system is Lorenz63, with &sigma; = 10, &rho; = 28, and &beta; = 8/3:</p>
-          <div class="post-equation" role="math" aria-label="dx over dt equals 10 times y minus x; dy over dt equals x times 28 minus z, minus y; dz over dt equals x y minus eight thirds z."><span>dx/dt = 10(y &minus; x)</span><span>dy/dt = x(28 &minus; z) &minus; y</span><span>dz/dt = xy &minus; (8/3)z</span></div>
+          <p>The reference system is Lorenz63, with \(\sigma = 10\), \(\rho = 28\), and \(\beta = 8/3\):</p>
+          <div class="math-display" tabindex="0" role="region" aria-label="Lorenz63 differential equations">
+            \[\begin{aligned}
+              \frac{\mathrm{d}x}{\mathrm{d}t} &amp;= 10(y-x), \\
+              \frac{\mathrm{d}y}{\mathrm{d}t} &amp;= x(28-z)-y, \\
+              \frac{\mathrm{d}z}{\mathrm{d}t} &amp;= xy-\frac{8}{3}z.
+            \end{aligned}\]
+          </div>
           <p>After a 100-time-unit spin-up, states are sampled every 0.01 time units. Each of five final splits contains 64 training trajectories of length 20, 32 validation initial conditions, and 128 held-out test initial conditions. Hyperparameters are selected on a separate development split and then frozen. Gaussian noise is added only to training observations, at 0%, 0.1%, 1%, or 5% of each coordinate's clean training standard deviation.</p>
-          <p>Forecast quality is measured by valid prediction time, or VPT. It ends when normalized squared state error first exceeds 0.4 and is reported in Lyapunov times, &lambda;<sub>max</sub>t, with &lambda;<sub>max</sub> &asymp; 0.9134. A survival curve asks what fraction of forecasts have remained valid up to each time.</p>
+          <p>Forecast quality is measured by valid prediction time, or VPT. It ends when normalized squared state error first exceeds 0.4 and is reported in Lyapunov times, \(\lambda_{\max}t\), with \(\lambda_{\max}\approx 0.9134\). A survival curve asks what fraction of forecasts have remained valid up to each time.</p>
         </section>
 
         <section aria-labelledby="weak-title">
           <h2 id="weak-title">Moving the derivative off the data</h2>
-          <p><strong>Strong SINDy</strong> estimates time derivatives from observed states and fits a polynomial vector field. That derivative estimate is fragile under noise. <strong>Weak SINDy</strong> instead fits integrated equations. For a compact test function &phi; and candidate library &Theta;, integration by parts gives</p>
-          <p class="post-equation" role="math" aria-label="Negative integral of x times the derivative of phi equals the integral of the library Theta of x times coefficients Xi times phi.">&minus;&int; x(t)&phi;&prime;(t) dt = &int; &Theta;(x(t))&Xi;&phi;(t) dt.</p>
+          <p><strong>Strong SINDy</strong> estimates time derivatives from observed states and fits a polynomial vector field. That derivative estimate is fragile under noise. <strong>Weak SINDy</strong> instead fits integrated equations. For a compact test function \(\phi\) and candidate library \(\Theta\), integration by parts gives</p>
+          <div class="math-display" tabindex="0" role="region" aria-label="Weak-form equation after integration by parts">
+            \[-\int x(t)\phi'(t)\,\mathrm{d}t
+              =\int\Theta(x(t))\Xi\phi(t)\,\mathrm{d}t.\]
+          </div>
           <p>The derivative acts on the known test function rather than the noisy observations. The implementation uses 81-sample windows, a 20-sample stride, four polynomial&ndash;Legendre test functions, and trapezoidal quadrature. The weak variants share a degree-two library and the same fitting settings.</p>
           <p><strong>Endpoint-weighted weak SINDy</strong> leaves each local weak integral unchanged, then weights the resulting regression rows by the window center. The smooth taper is</p>
-          <p class="post-equation" role="math" aria-label="w of s equals exp of 4 minus 1 over s times 1 minus s, for s between zero and one.">w(s) = exp(4 &minus; 1/[s(1 &minus; s)]), &nbsp; 0 &lt; s &lt; 1.</p>
-          <p>The endpoint weights are zero and are normalized to unit mean. Both sides of each regression row are multiplied by &radic;w. Uniform weights exactly recover the unweighted weak fit. The frozen threshold is zero, so these benchmark runs test estimation rather than sparse-term pruning; the quadratic library already contains the true Lorenz terms.</p>
+          <div class="math-display" tabindex="0" role="region" aria-label="Smooth endpoint taper">
+            \[w(s)=\exp\!\left(4-\frac{1}{s(1-s)}\right),\qquad 0&lt;s&lt;1.\]
+          </div>
+          <p>The endpoint weights are zero and are normalized to unit mean. Both sides of each regression row are multiplied by \(\sqrt{w}\). Uniform weights exactly recover the unweighted weak fit. The frozen threshold is zero, so these benchmark runs test estimation rather than sparse-term pruning; the quadratic library already contains the true Lorenz terms.</p>
         </section>
 
         <section aria-labelledby="core-results-title">
@@ -60,7 +83,7 @@
 
         <section aria-labelledby="extension-title">
           <h2 id="extension-title">What the new curves add</h2>
-          <p><strong>Integral-matching Lorenz</strong> receives the exact equation form but not its parameters. It pools cumulative trapezoidal integral equations across training trajectories and solves one through-origin regression for each of &sigma;, &rho;, and &beta;. This avoids derivative estimation, but it has more structural information than state-only SINDy.</p>
+          <p><strong>Integral-matching Lorenz</strong> receives the exact equation form but not its parameters. It pools cumulative trapezoidal integral equations across training trajectories and solves one through-origin regression for each of \(\sigma\), \(\rho\), and \(\beta\). This avoids derivative estimation, but it has more structural information than state-only SINDy.</p>
           <section class="results-table" aria-label="Extended Lorenz reference results; scroll horizontally on a narrow screen" tabindex="0">
             <table><caption>Mean restricted VPT (LT) under different information contracts.</caption><thead><tr><th scope="col">Method</th><th scope="col">Input or noise</th><th scope="col">VPT</th></tr></thead><tbody>
               <tr><th scope="row">Integral matching</th><td>0 / 0.1 / 1 / 5%</td><td>8.684 / 9.046 / 6.950 / 4.120</td></tr>
