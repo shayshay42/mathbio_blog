@@ -44,7 +44,7 @@ Visit http://localhost:4173. No build or npm install is required. Typography use
 - `index.html`: biography, research links, note list, project cards, and sharpener viewer.
 - `style.css`: layout, typography, responsive rules, enamel palette.
 - `portrait-viewer.js`, `portrait.css`: subtle CSS depth and pointer/focus tilt for the homepage portrait, with reduced-motion support.
-- `assets/portrait/`: generated portrait, decorative chalk vectors, and image-generation prompts. The portrait links to LinkedIn and works without JavaScript or WebGL.
+- `assets/portrait/`: original photo, transparent silhouette cutout, decorative chalk vectors, and masking instructions. The portrait links to LinkedIn and works without JavaScript or WebGL.
 - `publications.html`: preprints, manuscripts and their status, archive links, and research code.
 - `assets/publications.bib`: full-author BibTeX citations for the five listed works.
 - `assets/cv/`: downloadable English and French CVs, with editable LaTeX sources in `source/`.

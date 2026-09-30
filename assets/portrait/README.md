@@ -1,24 +1,20 @@
 # Homepage portrait
 
-`shayan-3d.png` is a stylized portrait made from the LinkedIn photo supplied by Shayan in this conversation, using the built-in imagegen tool. The final image has a white background matching the page; it has no alpha channel. The first generation returned a painted checkerboard, so a second edit replaced it with a plain white background.
+`shayan-cutout.png` is the silhouette cutout of Shayan’s original photograph, `source/linkedin_dp.jpeg`, supplied for this website. The source is preserved unchanged. No image generation, face retouching, color correction, or resampling was used.
 
-The portrait is a rendered image, not a volumetric head mesh. `portrait-viewer.js` tilts CSS depth layers containing the portrait and the original vector chalk symbols in `chalk-math.svg`. It uses no WebGL, has no idle animation, and stays still with reduced motion or touch input. The native portrait link opens Shayan’s LinkedIn page. The image and symbols remain visible without JavaScript.
+Apple Vision’s foreground-instance mask removes the chalkboard by changing only transparency. Every RGB channel in the cropped output matches ImageIO’s decoded source pixels exactly, including the hair, face, and fleece. Fully transparent pixels retain their original RGB values; some image inspection tools ignore alpha and may show the hidden chalkboard. Browsers display the transparent silhouette.
 
-## Initial prompt
+- Source: 800 × 800 JPEG; SHA-256 `ae008483b4ca3f592f51a5f813284f7ffb176854b4d6ca600b2a4f4f6e32d67b`.
+- Crop: top-left `(124, 176)`, size `597 × 624`, in source pixels; twelve pixels of padding where the source bounds allow it.
+- Output: RGBA PNG, with 170,229 fully transparent pixels and 189,051 fully opaque pixels; soft mask edges preserve hair detail.
 
-Use case: style-transfer, identity-preserve.
-Asset type: transparent 3D-rendered portrait cutout for a minimal academic personal website.
-Input image: the attached LinkedIn portrait is the edit target and identity reference.
-Primary request: transform this same person into a tasteful, softly sculpted 3D illustration with a ceramic/clay and satin enamel aesthetic. Remove the blackboard and all background completely.
-Subject/invariants: keep his recognizable facial structure, warm medium skin tone, dark eyes, thick curly dark hair, short dark beard and moustache, natural reserved smile, head angle, and blue-teal quarter-zip fleece with collar and brass zip. Keep adult proportions, faithful likeness, and his original expression. Avoid a generic avatar face, exaggerated eyes, caricature, or adding glasses.
-Composition: centered single bust, from crown to mid-chest, all hair and shoulders contained with comfortable transparent margin, straight-on view retaining the original slight head tilt. End the bust with a gently rounded sculptural lower edge rather than a rectangular photo crop. The complete bust should fill about 85% of the square canvas height.
-Style: premium restrained cartoon 3D illustration, softly rounded sculpted forms, realistic facial proportions simplified carefully, subtly textured curly hair and fleece, warm satin skin and soft enamel-like blue clothing highlights. A physical miniature portrait sculpture, lit like the website's small enamel desk objects. Gentle studio light from upper left, soft dimensional shading.
-Backdrop: genuinely transparent RGBA background with clean alpha edges. No chalkboard, no backdrop plane, no pedestal, no circle, no frame, no cast shadow outside the subject.
-Constraints: this asset will be surrounded by independently floating chalk mathematics in the webpage, so generate ONLY the isolated person, with no mathematical symbols or text baked into this image. Preserve identity and clothing. No extra objects, labels, lettering, watermarks, or logos. Square composition, transparent output.
+To reproduce the cutout on macOS 14 or later with Apple’s command-line developer tools, run from the repository root. The tool requires a new output path and preserves the input:
 
-## Final edit prompt
+```sh
+swiftc -O tools/cutout-portrait.swift -o /tmp/cutout-portrait
+/tmp/cutout-portrait assets/portrait/source/linkedin_dp.jpeg /tmp/shayan-cutout.png
+```
 
-Edit target: the attached generated portrait of Shayan. Keep exactly the same recognizable person, face shape, expression, head tilt, curly dark hair, short beard and blue-teal zip fleece.
-Please correct this image for production use as a small 3D illustrated bust on a WHITE personal website. REMOVE THE ENTIRE CHECKERBOARD BACKGROUND. The checkerboard in this input is a mistake, not a desired design element. Replace it with uniform pure white RGB 255,255,255 to all four edges. No grey, no cream, no background texture, no gradient, no pattern or transparency-grid visualization anywhere.
-Strengthen the restrained 3D clay sculpture/cartoon rendering a little: simplify skin and clothing into smooth gently rounded sculpted forms with satin ceramic lighting, and render hair as sculpted curly locks, while retaining this person's identity, adult facial proportions, dark eyes, beard and reserved smile. Keep clothing's blue and brass zip. Not hyperreal skin pores, not a photo cutout, not large cartoon eyes.
-Keep the same complete crown-to-mid-chest bust with a rounded bottom edge, centered square composition and white space around all edges. Soft studio light from upper left. No pedestal, props, math, text, frames, logos, floor or external shadow. Background must be flat PURE WHITE.
+The tool reports its mask method, crop coordinates, and source checksum. Vision mask output can vary across macOS releases. The committed PNG works on all site visitors’ devices without Apple Vision or any runtime background removal.
+
+`portrait-viewer.js` adds a small pointer/focus tilt to CSS depth layers holding the photo and the vector chalk symbols in `chalk-math.svg`. The portrait links to LinkedIn. It stays static for reduced motion and touch input, and remains visible without JavaScript or WebGL.

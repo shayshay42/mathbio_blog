@@ -1,4 +1,4 @@
-// The portrait is a rendered illustration on a CSS plane. Hand-drawn math
+// The portrait is the original photo cutout on a CSS plane. Hand-drawn math
 // sits on separate depth planes; no WebGL or continuous animation is needed.
 document.querySelectorAll('.portrait-view').forEach(mountPortrait);
 
