@@ -1,0 +1,291 @@
+{
+  "schema_version": 1,
+  "source_repository": "activation_steering_WM",
+  "original_files": [
+    {
+      "path": "outputs/panda_bifurcation/positive_control.npz",
+      "bytes": 23881,
+      "sha256": "3bd367081d880893ed33f5ba6c2bb5bcfb283f25a1879792d78a0cc1d69c74f3"
+    },
+    {
+      "path": "outputs/panda_bifurcation/positive_control.json",
+      "bytes": 1262,
+      "sha256": "14dfdde3711fb6a01d6d79dda58c27c823f4894c3f3d5de1b8fc5b14b3ecc806"
+    },
+    {
+      "path": "outputs/panda_cycle/arrays.npz",
+      "bytes": 28676395,
+      "sha256": "627d537c8e5c850e51a67af106476ea3c9fbdd8b554df0421c61f9ff88264027"
+    },
+    {
+      "path": "outputs/panda_cycle/results.json",
+      "bytes": 87876,
+      "sha256": "683d115921773a603fe2666260499a2683e384c7b491677b85b98e3146c7c9ce"
+    },
+    {
+      "path": "outputs/panda_world_model/report_arrays.npz",
+      "bytes": 33940167,
+      "sha256": "2f7458ed2fc92f799d69d4bbf83aeba833d60a8e6081f95885184150b86f9481"
+    },
+    {
+      "path": "outputs/panda_world_model/results.json",
+      "bytes": 90715,
+      "sha256": "3602099e6286cf4812184fe08739c571a2e743e8eb0cd9c73b717162b59022c4"
+    },
+    {
+      "path": "src/ioi_steering/panda_bifurcation_stability.py",
+      "bytes": 24635,
+      "sha256": "7076b69b0c2f357b6104ea0cbdd498384bde786f2666836b7dd0b4892f151a5c"
+    },
+    {
+      "path": "outputs/panda_frequency/results.json",
+      "bytes": 42577,
+      "sha256": "4f22ecb9fa92d3b75258b7c49c5aadffb69eaa964e035431251224ed14daf474"
+    },
+    {
+      "path": "outputs/panda_bifurcation/results.json",
+      "bytes": 19763,
+      "sha256": "5dcb1d78b1ce908b99f3ecb7e421309817afbff96b4289a7df819361b2ad8a67"
+    },
+    {
+      "path": "outputs/panda_bifurcation/extension.json",
+      "bytes": 3755,
+      "sha256": "eb9468e0e51c4aec3fc814a178433e97a0a64822091828b705c2fc80efac0b4f"
+    },
+    {
+      "path": "outputs/panda_bifurcation/stability.json",
+      "bytes": 278277,
+      "sha256": "8ff977e9764100ac4db10f2f22065c5a71765dfd1a8999c548c51eb50f78a0be"
+    }
+  ],
+  "environment": {
+    "python": "3.11.12",
+    "numpy": "1.26.4",
+    "matplotlib": "3.11.0"
+  },
+  "selection": {
+    "toy-phase": {
+      "archive": "outputs/panda_bifurcation/positive_control.npz",
+      "mu": [
+        -0.05,
+        0.05
+      ],
+      "source_indices": [
+        0,
+        2
+      ],
+      "steps": "all 600 saved states after updates 1..600",
+      "initial_state": [
+        0.03,
+        0.0
+      ],
+      "initial_state_source": "src/ioi_steering/panda_bifurcation_stability.py:431-437; verified by the recorded first update",
+      "projection": "none; actual two-dimensional toy state"
+    },
+    "panda-cycle": {
+      "group_key": "shared_jacobian_h8",
+      "group_index": 9,
+      "layer": 8,
+      "strength": 2.0,
+      "strength_index": 4,
+      "case_index": 0,
+      "channel": 0,
+      "context_type": "white_noise",
+      "input_length": 512,
+      "horizon_length": 128,
+      "test_seed": 9301
+    },
+    "activation-control": {
+      "archive": "outputs/panda_world_model/report_arrays.npz",
+      "objective": "activation",
+      "metric": "control_state_error_ratio",
+      "methods": [
+        "smwm",
+        "pca",
+        "direct"
+      ],
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "contexts": 128,
+      "aggregation": "Within each objective/method/seed, median of all 128 case ratios in source float32 precision. Each dot is one seed; seeds share the same 128 contexts."
+    },
+    "waveform-control": {
+      "archive": "outputs/panda_world_model/report_arrays.npz",
+      "objective": "waveform",
+      "metric": "control_goal_error_ratio",
+      "methods": [
+        "smwm",
+        "pca",
+        "direct"
+      ],
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "contexts": 128,
+      "aggregation": "Within each objective/method/seed, median of all 128 case ratios in source float32 precision. Each dot is one seed; seeds share the same 128 contexts."
+    }
+  },
+  "metric_definitions": {
+    "activation": "Actual full H6 squared error toward the recorded guided H6 target, divided by the same context zero-action H6 error toward that target. The reachable endpoint is supplied; its generating actions are withheld.",
+    "waveform": "Mean squared actual forecast-to-prescribed-waveform error after channelwise division by recipient input scale, divided by the same context no-edit normalized waveform error."
+  },
+  "cautions": [
+    "The toy phase portrait is a separate mathematical normal form, not a PANDA trajectory or a verified PANDA bifurcation. Rational rotation 2*pi/32 gives 32-periodic trajectories on its invariant circle.",
+    "The PANDA cycle panel shows an imposed pattern through the final linear output head, not improved prediction of the natural future.",
+    "Case 0 was fixed in the saved experiment; strength 2 is a descriptive sweep setting, not the failed early-layer validation selection.",
+    "Only the last 128 of 512 input samples and channel 0 are displayed.",
+    "Control markers are per-seed medians over the same 128 held-out contexts, not independent extra test samples or confidence intervals.",
+    "Control panels use actual full-state/output errors, not latent distances or amplitude-gated success fractions.",
+    "Random controllers are omitted from these compact panels; no-edit remains the normalization line at 1. Full results retain all baselines."
+  ],
+  "verification": {
+    "source_hashes_unchanged_after_extraction": true,
+    "data_extraction": "Direct indexed array copies; no smoothing, interpolation, normalization or model inference. Only the specified error-ratio median is derived.",
+    "toy_coordinates_exact": true,
+    "cycle_traces_exact": true,
+    "all_2304_case_error_ratios_exact": true,
+    "all_18_medians_exact": true,
+    "no_edit_reference": "The normalization reference is 1. Re-executed zero-action controls differ from that value only within float32 replay rounding.",
+    "reexecuted_zero_action_max_abs_difference_from_one": {
+      "activation": 5.960464477539062e-07,
+      "waveform": 5.364418029785156e-07
+    },
+    "source_hashes_unchanged_after_render_and_regeneration": true,
+    "isolated_regeneration_from_script_and_compact_data_only": true,
+    "all_eight_exports_byte_identical_after_regeneration": true,
+    "verification_precision": "Toy float64 and PANDA float32, exact copied-array equality; medians reduced in float32.",
+    "portable_text_encoding": "UTF-8 with LF newlines, matching repository .gitattributes; numerical values and plot exports unchanged"
+  },
+  "generated_artifacts": [
+    {
+      "path": "toy-phase.png",
+      "bytes": 101697,
+      "sha256": "8b4dbb54d9db1d0be62b92215d943ffca81b05f0f63c1086ea4cecb24d457991",
+      "width": 1100,
+      "height": 960
+    },
+    {
+      "path": "toy-phase.pdf",
+      "bytes": 59720,
+      "sha256": "ffc793b7f8c90fa8f16302a503e103d249061ce16503567d76f2b33cafba7be6"
+    },
+    {
+      "path": "panda-cycle.png",
+      "bytes": 154817,
+      "sha256": "fb2b59d07cc87c33da3c44d2dcf21c58c046b19fd828eb70861d1a721c41a375",
+      "width": 1280,
+      "height": 880
+    },
+    {
+      "path": "panda-cycle.pdf",
+      "bytes": 62259,
+      "sha256": "c74ad54fcb5ba1bcf6e86a2c12429f78e2e676818ba5b531c2028631cf61a43f"
+    },
+    {
+      "path": "activation-control.png",
+      "bytes": 66468,
+      "sha256": "596182ce4537bf61591bb561a283cf33da3c155a713481a7094747eaa2f031e3",
+      "width": 1100,
+      "height": 880
+    },
+    {
+      "path": "activation-control.pdf",
+      "bytes": 19636,
+      "sha256": "a3eecd6fad847b309b8a8abc5feaa84b1b1af0ed57fa026306b1befedfe9837f"
+    },
+    {
+      "path": "waveform-control.png",
+      "bytes": 68823,
+      "sha256": "655edebc37dc4567f9ba19f1815da07b42d7fa731518f2646dddc6dc2b87262d",
+      "width": 1100,
+      "height": 880
+    },
+    {
+      "path": "waveform-control.pdf",
+      "bytes": 43175,
+      "sha256": "2e5aa8e586cf828a44dd347dc04cf68f458d3322d9c0aafd84f545037f7b1bb3"
+    },
+    {
+      "path": "figure-data.json",
+      "bytes": 117457,
+      "sha256": "8bbee3935e59013b9ae19ab411873558c3494b376a34002f580b227b68d0a3a5"
+    },
+    {
+      "path": "control_medians.csv",
+      "bytes": 1467,
+      "sha256": "ef500337669aed67d31dfed93c15c10dc8a1b768c502b7931f7374db3042436f"
+    },
+    {
+      "path": "generate_figures.py",
+      "bytes": 8860,
+      "sha256": "acb3801120d264c05aaf8fdc784c685bab4501a734709c1a41f1d78725699cf0"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2886,
+      "sha256": "3378ac335cc0e8b7558d3184af663d27840ec46878e1e496014b4a05bf7cca79"
+    }
+  ],
+  "narrative_facts": {
+    "local_frequency_steering": {
+      "source": "outputs/panda_frequency/results.json",
+      "method": "local_jacobian; each test input has its own model-gradient direction in the broadcast action space",
+      "cases": 96,
+      "selected_layer": 7,
+      "test_seed": 4028,
+      "validation_selected_strength": 0.125,
+      "signed_results": [
+        {
+          "strength": -0.125,
+          "intended_direction_cases": 96,
+          "mean_relative_frequency_change": -0.009275323711335659,
+          "quality_pass_cases": 96,
+          "mean_fit_r2": 0.9918901324272156
+        },
+        {
+          "strength": 0.125,
+          "intended_direction_cases": 96,
+          "mean_relative_frequency_change": 0.00957108661532402,
+          "quality_pass_cases": 96,
+          "mean_fit_r2": 0.9925065636634827
+        }
+      ],
+      "interpretation": "About 1% change in the intended direction for all 96 cases at either sign. These are the same 96 cases, not 192 independent inputs. This local intervention differs from the shared H8 edit in the figure."
+    },
+    "feedback_search": {
+      "sources": [
+        "outputs/panda_bifurcation/results.json",
+        "outputs/panda_bifurcation/extension.json",
+        "outputs/panda_bifurcation/stability.json"
+      ],
+      "initial_steps": 4096,
+      "initial_conditions": 144,
+      "initial_regime_counts": {
+        "decaying": 5,
+        "diverged": 131,
+        "growing": 7,
+        "irregular": 1
+      },
+      "magnitude_stop_bound": 10000.0,
+      "continued_conditions": 13,
+      "total_steps": 8192,
+      "extension_regime_counts": {
+        "decaying": 1,
+        "diverged": 6,
+        "growing": 6
+      },
+      "remaining_below_bound": 7,
+      "sustained_candidates_after_extension": 0,
+      "qualified_equilibria": 15,
+      "equilibria_examined": 36,
+      "qualified_equilibria_outside_unit_circle": 15,
+      "verified_bifurcation": false,
+      "interpretation": "No sustained candidate or verified Hopf/Neimark-Sacker bifurcation was found in this finite search of the chosen one-sample feedback wrapper. The internal diverged label means a magnitude-limit/invalid stop, not proven asymptotic divergence. Solver failure does not prove nonexistence."
+    }
+  }
+}
