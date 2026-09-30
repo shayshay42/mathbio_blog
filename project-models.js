@@ -1,0 +1,266 @@
+import * as THREE from './assets/vendor/three.module.js';
+
+// Original geometry adapted from each project's published mark. These are solid
+// enamel reliefs, not image planes: the outlines, glasses and branches have depth.
+export function createProjectLogo(kind) {
+  if (kind === 'readtheroom') return createChameleon();
+  if (kind === 'rizome') return createRizome();
+  throw new Error(`Unknown project logo: ${kind}`);
+}
+
+function enamel(color, roughness = 0.34, metalness = 0.12) {
+  return new THREE.MeshStandardMaterial({ color, roughness, metalness });
+}
+
+function addMesh(group, geometry, material, name) {
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.name = name;
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  group.add(mesh);
+  return mesh;
+}
+
+function relief(group, shape, material, name, z, depth, bevel = 0.018, curveSegments = 14) {
+  const geometry = new THREE.ExtrudeGeometry(shape, {
+    depth, steps: 1, curveSegments, bevelEnabled: bevel > 0,
+    bevelThickness: bevel, bevelSize: bevel, bevelSegments: 4,
+  });
+  const mesh = addMesh(group, geometry, material, name);
+  mesh.position.z = z;
+  return mesh;
+}
+
+// Coordinates follow the source mark; conversion puts the relief in a compact,
+// y-up space and lets the hand-drawn bezier contours stay legible here.
+function outline(draw, origin = [435, 435], scale = 370) {
+  const shape = new THREE.Shape();
+  const x = value => (value - origin[0]) / scale;
+  const y = value => (origin[1] - value) / scale;
+  draw({
+    M: (a, b) => shape.moveTo(x(a), y(b)),
+    L: (a, b) => shape.lineTo(x(a), y(b)),
+    C: (a, b, c, d, e, f) => shape.bezierCurveTo(x(a), y(b), x(c), y(d), x(e), y(f)),
+    Q: (a, b, c, d) => shape.quadraticCurveTo(x(a), y(b), x(c), y(d)),
+    Z: () => shape.closePath(),
+  });
+  return shape;
+}
+
+function createChameleon() {
+  const group = new THREE.Group();
+  group.name = 'Read the Room — chameleon enamel logo';
+  const teal = enamel('#17b6b1');
+  const edge = enamel('#129d9a', 0.32, 0.2);
+  const mint = enamel('#87e3b1');
+  const yellow = enamel('#ffdf5b');
+  const coral = enamel('#ff9369');
+  const lens = enamel('#ffb833', 0.24, 0.16);
+  const smile = enamel('#172b28', 0.5, 0);
+
+  const silhouette = outline(p => {
+    p.M(397, 130);
+    p.C(397, 98, 384, 62, 414, 44);
+    p.C(461, 9, 605, 118, 692, 207);
+    p.C(713, 158, 742, 147, 769, 156);
+    p.C(810, 169, 814, 205, 797, 253);
+    p.L(771, 305);
+    p.C(789, 329, 810, 357, 802, 382);
+    p.C(786, 444, 692, 475, 585, 459);
+    p.C(665, 560, 635, 708, 536, 782);
+    p.C(437, 861, 267, 822, 164, 712);
+    p.C(70, 616, 39, 523, 70, 391);
+    p.C(108, 227, 221, 129, 373, 128);
+    p.Z();
+  });
+  relief(group, silhouette, edge, 'Rounded chameleon silhouette and teal edge', -0.12, 0.22, 0.032);
+
+  let patchLevel = 0.108;
+  const patch = (name, material, draw, z) => {
+    // Give overlapping color fields distinct front planes, avoiding z-fighting.
+    const layer = z ?? (patchLevel += 0.005);
+    return relief(group, outline(draw), material, name, layer, 0.014, 0.007);
+  };
+
+  // Large smooth color fields follow the same continuous outline. Small raised
+  // lips make the colored regions read as a friendly enamel object in side view.
+  patch('Coral shoulder and outer back', coral, p => {
+    p.M(181, 195); p.C(127, 239, 88, 307, 71, 392);
+    p.C(46, 507, 67, 598, 144, 681);
+    p.C(151, 611, 215, 520, 273, 413);
+    p.C(287, 389, 273, 367, 259, 333); p.Z();
+  });
+  patch('Yellow stripe across the back', yellow, p => {
+    p.M(131, 244); p.L(218, 265); p.C(245, 311, 261, 345, 275, 380);
+    p.C(285, 401, 270, 428, 236, 469); p.L(74, 366);
+    p.C(87, 320, 109, 278, 131, 244); p.Z();
+  });
+  patch('Mint shoulder', mint, p => {
+    p.M(183, 194); p.C(234, 151, 304, 132, 371, 130);
+    p.L(382, 216); p.C(373, 286, 386, 374, 416, 435);
+    p.C(365, 440, 314, 466, 289, 516);
+    p.C(287, 466, 269, 442, 275, 414);
+    p.C(297, 385, 216, 269, 183, 194); p.Z();
+  });
+  patch('Yellow lower body', yellow, p => {
+    p.M(181, 713); p.C(234, 760, 330, 817, 437, 815);
+    p.C(495, 814, 555, 777, 583, 725);
+    p.L(498, 676); p.C(393, 781, 286, 747, 209, 669); p.Z();
+  });
+  patch('Coral lower body', coral, p => {
+    p.M(267, 615); p.C(321, 658, 397, 686, 503, 669);
+    p.L(446, 790); p.C(360, 786, 267, 758, 190, 697);
+    p.C(213, 657, 234, 622, 267, 615); p.Z();
+  });
+  patch('Mint stripe below tail', mint, p => {
+    p.M(321, 672); p.L(381, 697); p.L(326, 804);
+    p.C(310, 800, 293, 794, 280, 786); p.Z();
+  });
+  patch('Mint tail outer curl', mint, p => {
+    p.M(438, 815); p.C(571, 799, 647, 665, 584, 555);
+    p.C(554, 578, 522, 613, 500, 644);
+    p.C(477, 693, 449, 754, 438, 815); p.Z();
+  });
+
+  // The casque is a separate gently rounded coral crown behind the glasses.
+  patch('Coral chameleon crown', coral, p => {
+    p.M(402, 205); p.C(400, 167, 391, 109, 398, 72);
+    p.C(407, 18, 447, 39, 485, 60);
+    p.C(559, 101, 637, 160, 688, 210);
+    p.L(630, 247); p.L(490, 229);
+    p.C(447, 221, 411, 221, 402, 205); p.Z();
+  }, 0.128);
+
+  patch('Yellow cheek and rounded snout', yellow, p => {
+    p.M(374, 167); p.C(350, 211, 343, 263, 356, 314);
+    p.C(363, 361, 386, 403, 416, 436);
+    p.C(486, 428, 529, 464, 594, 460);
+    p.C(691, 467, 773, 446, 793, 397);
+    p.C(819, 363, 774, 319, 747, 278);
+    p.L(718, 237); p.C(707, 216, 677, 223, 651, 235);
+    p.L(487, 245); p.L(391, 231);
+    p.C(379, 229, 377, 197, 374, 167); p.Z();
+  }, 0.142);
+
+  // Build the tail as one continuous thick spiral ribbon. Its exposed outside
+  // and raised coil keep the defining curl readable even in a small card.
+  const tailShape = outline(p => {
+    p.M(419, 438);
+    p.C(335, 428, 263, 499, 264, 588);
+    p.C(264, 662, 318, 719, 391, 720);
+    p.C(456, 724, 510, 681, 510, 626);
+    p.C(512, 578, 483, 542, 443, 538);
+    p.C(405, 532, 369, 557, 368, 593);
+    p.C(366, 618, 384, 636, 409, 637);
+    p.L(417, 614);
+    p.C(403, 614, 398, 604, 403, 592);
+    p.C(410, 571, 439, 576, 453, 595);
+    p.C(477, 629, 455, 673, 418, 683);
+    p.C(356, 699, 307, 651, 306, 591);
+    p.C(304, 522, 352, 473, 419, 470);
+    p.Z();
+  });
+  relief(group, tailShape, mint, 'Raised continuous spiral tail', 0.16, 0.026, 0.019);
+  patch('Golden half of the tail curl', yellow, p => {
+    p.M(420, 470); p.C(498, 464, 552, 507, 581, 554);
+    p.L(510, 633); p.C(510, 573, 484, 542, 443, 538);
+    p.C(435, 536, 427, 537, 419, 540); p.Z();
+  }, 0.165);
+  patch('Golden inner tail tip', yellow, p => {
+    p.M(419, 580); p.C(441, 575, 457, 596, 460, 615);
+    p.C(467, 650, 447, 675, 418, 683); p.L(401, 685);
+    p.L(414, 617); p.C(418, 608, 418, 594, 419, 580); p.Z();
+  }, 0.196);
+
+  // The two lenses and turquoise frames are rounded solids, raised above the
+  // head. Their slight asymmetry preserves the character of the source mark.
+  const eye = (cx, cy, rx, ry, z, name) => {
+    const shape = new THREE.Shape();
+    shape.absellipse((cx - 435) / 370, (435 - cy) / 370, rx / 370, ry / 370, 0, Math.PI * 2, false, 0);
+    relief(group, shape, lens, `${name} amber lens`, z, 0.025, 0.013);
+    const points = [];
+    for (let i = 0; i <= 72; i++) {
+      const t = i / 72 * Math.PI * 2;
+      points.push(new THREE.Vector3((cx - 435 + Math.cos(t) * rx) / 370, (435 - cy + Math.sin(t) * ry) / 370, z + 0.025));
+    }
+    const curve = new THREE.CatmullRomCurve3(points, false, 'centripetal');
+    addMesh(group, new THREE.TubeGeometry(curve, 72, 0.025, 8, false), teal, `${name} turquoise round frame`);
+  };
+  eye(752, 217, 47, 58, 0.19, 'Far');
+  const tube = (name, coordinates, material, radius, z) => {
+    const points = coordinates.map(([x, y]) => new THREE.Vector3((x - 435) / 370, (435 - y) / 370, z));
+    const curve = new THREE.CatmullRomCurve3(points);
+    addMesh(group, new THREE.TubeGeometry(curve, 40, radius, 10, false), material, name);
+    for (const point of [points[0], points.at(-1)]) {
+      const end = addMesh(group, new THREE.SphereGeometry(radius, 12, 8), material, `${name} rounded end`);
+      end.position.copy(point);
+    }
+  };
+  tube('Turquoise glasses arm', [[383, 139], [390, 218], [445, 229], [490, 236]], teal, 0.027, 0.22);
+  tube('Turquoise glasses bridge', [[634, 230], [672, 216], [704, 212]], teal, 0.027, 0.23);
+  eye(568, 253, 76, 80, 0.235, 'Near');
+  tube('Friendly curved smile', [[568, 376], [611, 396], [673, 404], [736, 397], [789, 376]], smile, 0.021, 0.195);
+
+  // Center the visual weight rather than its asymmetric snout.
+  group.position.set(0, 0, 0);
+  return group;
+}
+
+function createRizome() {
+  const group = new THREE.Group();
+  group.name = 'Rizome — branching ivory enamel medallion';
+  const sand = enamel('#d5b68c', 0.47, 0.1);
+  const rim = enamel('#b99262', 0.34, 0.3);
+  const ivory = enamel('#fffaf0', 0.34, 0.1);
+  const disc = new THREE.Shape();
+  disc.absarc(0, 0, 1.005, 0, Math.PI * 2, false);
+  relief(group, disc, rim, 'Rounded warm-gold medallion edge', -0.125, 0.2, 0.035, 64);
+  const face = new THREE.Shape();
+  face.absarc(0, 0, 0.991, 0, Math.PI * 2, false);
+  relief(group, face, sand, 'Tan enamel face', 0.087, 0.019, 0.018, 64);
+
+  const ring = (radius, thickness, name) => {
+    const mesh = addMesh(group, new THREE.TorusGeometry(radius, thickness, 10, 100), ivory, name);
+    mesh.position.z = 0.142;
+  };
+  ring(0.908, 0.027, 'Ivory circular boundary');
+  ring(0.205, 0.043, 'Ivory central opening');
+
+  // Branches reproduce the actual asymmetric radial/root motif. Every curved
+  // stroke is a small round raised tube; endpoints are softly capped.
+  const branch = (name, points, radius = 0.016) => {
+    const vectors = points.map(([x, y]) => new THREE.Vector3((x - 256) / 210, (256 - y) / 210, 0.14));
+    const curve = new THREE.CatmullRomCurve3(vectors);
+    addMesh(group, new THREE.TubeGeometry(curve, 28, radius, 8, false), ivory, name);
+    for (const position of [vectors[0], vectors.at(-1)]) {
+      const cap = addMesh(group, new THREE.SphereGeometry(radius, 10, 8), ivory, `${name} rounded tip`);
+      cap.position.copy(position);
+    }
+  };
+  branch('North root', [[257, 212], [258, 165], [258, 132], [259, 96]], 0.018);
+  branch('Northwest fork', [[257, 151], [242, 139], [225, 122]], 0.014);
+  branch('Northeast fork', [[258, 168], [286, 140], [300, 112]], 0.015);
+  branch('Upper right root', [[291, 219], [316, 190], [329, 166], [335, 128]], 0.016);
+  branch('Upper right fork', [[321, 184], [344, 170], [362, 148]], 0.016);
+  branch('West crown root', [[227, 218], [201, 192], [188, 160], [177, 125]], 0.017);
+  branch('West crown fork', [[202, 194], [173, 181], [149, 161]], 0.016);
+  branch('Western root', [[208, 263], [162, 262], [133, 251], [108, 239]], 0.017);
+  branch('West fork up', [[185, 262], [174, 244], [163, 231]], 0.015);
+  branch('West fork down', [[158, 263], [138, 278], [110, 289]], 0.016);
+  branch('Southwest root', [[219, 284], [188, 314], [177, 342], [158, 367]], 0.016);
+  branch('Southwest fork', [[189, 313], [155, 319], [128, 332]], 0.016);
+  branch('Southern root', [[252, 302], [249, 339], [238, 374], [232, 405]], 0.018);
+  branch('Southern fork', [[250, 336], [272, 365], [290, 401]], 0.016);
+  branch('Southeast root', [[289, 292], [311, 321], [320, 354], [336, 386]], 0.016);
+  branch('Southeast fork', [[311, 321], [342, 341], [373, 351]], 0.016);
+  branch('Eastern root', [[305, 263], [335, 263], [369, 279], [405, 290]], 0.018);
+  branch('East upper fork', [[333, 263], [364, 247], [406, 238]], 0.017);
+  branch('East crown fork', [[348, 256], [365, 221], [390, 197]], 0.016);
+
+  for (const [x, y] of [[134, 205], [354, 310], [206, 367]]) {
+    const dot = addMesh(group, new THREE.SphereGeometry(0.044, 20, 12), ivory, 'Ivory orbit dot');
+    dot.scale.z = 0.55;
+    dot.position.set((x - 256) / 210, (256 - y) / 210, 0.138);
+  }
+  return group;
+}

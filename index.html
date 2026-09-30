@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="style.css">
   <script src="theme.js" defer></script>
   <script src="sharpener-viewer.js" type="module"></script>
+  <script src="project-viewer.js" type="module"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -18,6 +19,7 @@
       <h1>Shayan Hajhashemi</h1>
       <nav class="site-nav" aria-label="Main">
         <a href="index.html#notebook" aria-current="page">Notes</a>
+        <a href="#projects">Projects</a>
         <a href="publications.html">Publications</a>
         <a href="https://mila.quebec/en/directory/shayan-hajhashemi">Mila</a>
         <a href="https://github.com/shayshay42">GitHub <span aria-hidden="true">↗</span></a>
@@ -69,6 +71,35 @@
         </div>
       </section>
 
+      <section id="projects" aria-labelledby="projects-title">
+        <h2 id="projects-title">Projects</h2>
+        <div class="project-grid">
+          <article class="project-card">
+            <a class="project-link" href="https://readtheroom.site/" aria-labelledby="readtheroom-title">
+              <div class="project-logo" data-project="readtheroom" aria-hidden="true">
+                <img src="assets/projects/readtheroom.png" width="720" height="440" alt="" loading="lazy">
+              </div>
+              <div class="project-copy">
+                <h3 id="readtheroom-title">Read the Room <span aria-hidden="true">↗</span></h3>
+                <p>Anonymous polls that map how people feel across places and communities.</p>
+              </div>
+            </a>
+            <p class="project-story"><a href="https://soudkharusi.com/projects/readtheroom-app/">The story, by Soud Al Kharusi <span aria-hidden="true">↗</span></a></p>
+          </article>
+          <article class="project-card">
+            <a class="project-link" href="https://www.rizomebiotech.ai/" aria-labelledby="rizome-title">
+              <div class="project-logo" data-project="rizome" aria-hidden="true">
+                <img src="assets/projects/rizome.png" width="720" height="440" alt="" loading="lazy">
+              </div>
+              <div class="project-copy">
+                <h3 id="rizome-title">Rizome Biotech <span aria-hidden="true">↗</span></h3>
+                <p>Immune health intelligence from blood-count patterns over time.</p>
+              </div>
+            </a>
+          </article>
+        </div>
+      </section>
+
       <section id="research" aria-labelledby="research-title">
         <h2 id="research-title">Selected code</h2>
         <ul class="projects">
@@ -83,6 +114,6 @@
     <footer class="site-footer"><span>A notebook in progress.</span><a href="https://www.carlmfg.com/angel-5-pencil-sharpener/">Inspired by the Carl Angel-5 <span aria-hidden="true">↗</span></a></footer>
   </div>
 
-  <noscript><p class="noscript-note">Sharpener rotation and enamel colors need JavaScript. The notes and publications remain readable.</p></noscript>
+  <noscript><p class="noscript-note">3D interaction and enamel colors need JavaScript. The notes, projects, and publications remain available.</p></noscript>
 </body>
 </html>

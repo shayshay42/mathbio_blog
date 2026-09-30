@@ -1,6 +1,6 @@
 # Shayan’s research notebook
 
-A minimal, responsive personal researcher blog inspired by the Carl Angel-5 pencil sharpener. A simple page brings together a short bio, research links, three full blog posts, and publications. White paper, restrained typography, an enamel palette, and an original cartoon-style 3D sharpener give the page its character.
+A minimal, responsive personal researcher blog inspired by the Carl Angel-5 pencil sharpener. A simple page brings together a short bio, research links, three full blog posts, project cards, and publications. White paper, restrained typography, an enamel palette, and an original cartoon-style 3D sharpener give the page its character.
 
 ## Continue on another machine
 
@@ -32,11 +32,14 @@ Visit http://localhost:4173. No build or npm install is required. Typography use
 
 ## Editing
 
-- `index.html`: biography, research links, note list, and sharpener viewer.
+- `index.html`: biography, research links, note list, project cards, and sharpener viewer.
 - `style.css`: layout, typography, responsive rules, enamel palette.
 - `publications.html`: verified bioRxiv preprints, archive links, and research code.
 - `assets/publications.bib`: full-author BibTeX citations for the listed preprints.
 - `math.js`: shared LaTeX rendering for all `.blog-post` articles.
+- `project-models.js`: original 3D adaptations of the Read the Room and Rizome marks.
+- `project-viewer.js`: lazy, on-demand logo rendering and pointer/focus tilt.
+- `assets/projects/`: rendered logo previews for loading, no-JavaScript, and no-WebGL views.
 - `theme.js`: shared enamel theme, persisted across the homepage, articles, and publications.
 - `notes/weighted-weak-lorenz.html`: research entry with verified Lorenz63 methods and core SINDy results.
 - `notes/steering-a-forecasting-model.html`: short exploratory PANDA research note, with three figures and an open-ended conclusion.
@@ -72,7 +75,15 @@ Paths in `provenance.json` identify files in the original research workspace; th
 
 Posting dates follow bioRxiv, which differ by one day from the Mila listing for DiffDose and latent space differentiation. Author names follow deposited paper metadata; the latent-space paper lists Ali Saberi. These are labeled as preprints. Update the page and BibTeX together when adding papers or newer versions.
 
-The shared navigation links to Notes, Publications, https://mila.quebec/en/directory/shayan-hajhashemi, and GitHub.
+The shared navigation links to Notes, Projects, Publications, https://mila.quebec/en/directory/shayan-hajhashemi, and GitHub.
+
+## Project cards
+
+The homepage Projects section links directly to [Read the Room](https://readtheroom.site/) and [Rizome Biotech](https://www.rizomebiotech.ai/). Read the Room also links to [Soud Al Kharusi's development story](https://soudkharusi.com/projects/readtheroom-app/). Card descriptions follow those project websites.
+
+Both logos use real beveled geometry with raised details: Read the Room's chameleon and Rizome's branching medallion. The visual references are the sites' [chameleon mark](https://readtheroom.site/images/RTR-logo_Aug2025.png) and [Rizome mark](https://www.rizomebiotech.ai/favicon.png). The geometry is a stylized adaptation; the project names and marks identify their respective projects.
+
+Cards are ordinary links with decorative 3D views. The scenes initialize near the viewport, tilt with the pointer or keyboard focus, and remain still when idle or when reduced motion is requested. Touch gestures retain normal link and page scrolling behavior. Local PNGs preserve the appearance when JavaScript or WebGL is unavailable. Brand colors stay fixed when the notebook enamel changes. Re-render the previews if the geometry or lighting changes.
 
 ## Sharpener controls
 
