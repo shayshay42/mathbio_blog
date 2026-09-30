@@ -43,8 +43,9 @@ Visit http://localhost:4173. No build or npm install is required. Typography use
 
 - `index.html`: biography, research links, note list, project cards, and sharpener viewer.
 - `style.css`: layout, typography, responsive rules, enamel palette.
-- `publications.html`: verified bioRxiv preprints, archive links, and research code.
-- `assets/publications.bib`: full-author BibTeX citations for the listed preprints.
+- `publications.html`: preprints, manuscripts and their status, archive links, and research code.
+- `assets/publications.bib`: full-author BibTeX citations for the five listed works.
+- `assets/cv/`: downloadable English and French CVs, with editable LaTeX sources in `source/`.
 - `math.js`: shared LaTeX rendering for all `.blog-post` articles.
 - `project-models.js`: original 3D adaptations of the Read the Room and Rizome marks, plus the molecular glider logo.
 - `project-viewer.js`: lazy, on-demand logo rendering and pointer/focus tilt.
@@ -76,13 +77,19 @@ Paths in `provenance.json` identify files in the original research workspace; th
 
 ## Publications and profile
 
-`publications.html` lists three verified bioRxiv preprints, newest first, with full citations in `assets/publications.bib`. Metadata was checked on September 30, 2026 against the bioRxiv API and publisher-deposited Crossref records:
+`publications.html` lists three verified bioRxiv preprints and two additional manuscripts, with full citations in `assets/publications.bib`. Preprint metadata was checked on September 30, 2026 against the bioRxiv API and publisher-deposited Crossref records:
 
 - Immune phenotype: https://api.crossref.org/works/10.64898/2026.09.17.752366
 - DiffDose: https://api.crossref.org/works/10.64898/2026.09.07.749974
 - Latent space differentiation: https://api.crossref.org/works/10.64898/2026.03.04.709512
 
 Posting dates follow bioRxiv, which differ by one day from the Mila listing for DiffDose and latent space differentiation. Author names follow deposited paper metadata; the latent-space paper lists Ali Saberi. These are labeled as preprints. Update the page and BibTeX together when adding papers or newer versions.
+
+The author supplied the manuscript review statuses on September 30, 2026: DiffDose is under review at *npj Systems Biology and Applications*, and the QSP explainability manuscript is under review at *npj Precision Oncology*. The latter's title and eleven-author order come from the supplied title-page screenshot; no public archive or DOI is asserted. The nanobody manuscript is retained as withdrawn for intellectual property reasons, with author-confirmed order Philip Roche, Shayan Hajhashemi, Uri David Akavia. Its 2020 date comes from the French CV.
+
+English and French CV PDFs are linked on the homepage and publications page. Both list the same five works and statuses; paper titles remain in their original English, with status labels translated in the French CV. Their sources were adapted from `EN.tex` and `FR.tex` in the supplied `Shayan_Academic_CV.zip`; unrelated variants were not copied into the website. The original archive is preserved. Keep both CV publication sections, PDFs, website entries, and BibTeX in sync when a paper changes status.
+
+The homepage and both CVs also list the invited Real-MVP talk at the 2026 SIAM Conference on the Life Sciences (LS26), July 6, 2026, in Cleveland, Ohio. Its title and MS11 minisymposium details follow the [official talk entry](https://meetings.siam.org/sess/dsp_talk.cfm?p=157552) and [session schedule](https://meetings.siam.org/sess/dsp_programsess.cfm?sessioncode=88781). Invited status was confirmed by the author.
 
 The shared navigation links to Notes, Projects, Publications, [Mila](https://mila.quebec/en/directory/shayan-hajhashemi), both GitHub profiles ([shayshay42](https://github.com/shayshay42) and [carlangle](https://github.com/carlangle)), and [LinkedIn](https://ca.linkedin.com/in/hshay). The homepage names supervisors [Morgan Craig](https://morgancraiglab.com/about) and [Amin Emad](https://www.ece.mcgill.ca/~aemad2/). The PANDA note is titled “Looking for a bifurcation inside an LLM”; its existing article URL is retained.
 

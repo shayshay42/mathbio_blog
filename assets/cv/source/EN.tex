@@ -1,0 +1,331 @@
+% LaTeX Curriculum Vitae
+% Author: Xovee Xu (https://xovee.cn)
+% Last Update: Feb 1, 2024
+% Latest Version (consider give me a star!): https://github.com/Xovee/latex-cv
+% Overleaf Link: https://www.overleaf.com/latex/templates/xovees-cv-template/rrsmqwhbygcf
+% Current Version: v0.96
+% LICENSE: MIT
+
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[full]{textcomp}
+\usepackage{CJKutf8}
+\usepackage[lf]{ebgaramond}
+% \usepackage[scaled,swashQ]{garamondx}
+\usepackage[T1]{fontenc}
+
+\usepackage{enumitem}
+\usepackage[a4paper,left=.9in, right=.9in, top=1.0in, bottom=1.5in]{geometry}
+\usepackage{url}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{amsmath}
+\usepackage{eqparbox}
+
+% package settings
+\usepackage[
+    hidelinks,
+    pdfnewwindow=true,
+    pdfauthor={Shayan Hajhashemi},
+    pdftitle={Curriculum Vitae of Shayan Hajhashemi},
+    pdfpagemode=UseThumbs,
+]{hyperref}
+
+\pagestyle{headings}
+\markright{\textbf{Shayan Hajhashemi}}
+
+\setlength\parindent{2em}
+
+\thispagestyle{empty}
+
+% define cv section
+\newcommand{\cvsection}[1]{\section*{\rmfamily#1}}
+\newcommand{\cvsubsection}[1]{\subsection*{\rmfamily\hspace{1.6em}#1}}
+\newcommand{\HL}[1]{\textbf{\color{red}#1}}
+
+% begin
+\begin{document}
+
+% name
+\begin{center}
+    \Huge{
+    \rmfamily
+    \textbf{Shayan Hajhashemi}}
+\end{center}
+\vspace{20pt}
+
+
+
+\setlength{\parskip}{1pt}
+\renewcommand{\arraystretch}{1.25}
+
+% Contact Information
+
+\noindent Department of Quantitative Life Sciences \hfill +1 (438) 926-4544
+
+\noindent McGill University\hfill \href{mailto:shayan.hajhashemi@mail.mcgill.ca}{\texttt{shayan.hajhashemi@mail.mcgill.ca}}
+
+\noindent Montréal, QC, Canada\hfill \url{https://github.com/shayshay42}
+
+
+\setlength{\parskip}{1pt}
+
+
+
+
+% Summary / Statement
+\cvsection{Summary}
+\indent
+
+\hangindent=2em I am an interdisciplinary machine learning scientist specializing in large-scale probabilistic modeling, deep
+learning, and nonlinear dynamical systems for biological and clinical applications. My background in experimental imunology and computational modeling enables me to tackle complex challenges in drug discovery, clinical
+pharmacology, and single-cell data analysis as exemplified by my work in developing nanobodies, my thesis and work experience in systems pharmacology and my most recent project in cell-fate perturbations.
+
+% Education
+\cvsection{Education}
+\indent
+
+\textbf{McGill University}, Montréal, QC, Canada
+
+\hspace{1em} \textbf{Ph.D}, Quantitative Life Sciences, \hfill  Expected graduation: 2026
+\begin{itemize}[leftmargin=4em, itemsep=0pt]
+    \item[] \textbf{Thesis project}: Combination therapy optimization/control using Neural-ODEs in virtual clinical trials.
+    \item[] \textbf{Supervisors}: Morgan Craig \& Amin Emad
+\end{itemize}
+\vspace{3pt}
+
+\hspace{1em} \textbf{B.Sc. Hons.}, Interdepartmental Immunology, \hfill 2021
+\begin{itemize}[leftmargin=4em, itemsep=0pt]
+    \item[] \textbf{Honors project}: Local perturbation analysis (LPA) of Turing patterns in immune cell polarization and motility.
+    \item[] \textbf{Supervisor}: Anmar Khadra
+\end{itemize}
+
+% academic employment
+\cvsection{Employment}
+\indent
+
+\textbf{Genentech}, San Francisco, CA, United States \hfill (2024 - 2025)
+\begin{itemize}
+    \item[] Modeling \& Simulations Intern, Supervisor: Vincent Lemaire
+    \item[] \textbf{Project}: Surrogate Conditional Density Estimators of Quantitative Systems Pharmacology-driven Virtual Populations for Biomarker Research. Trained flow-matching with optimal transport using the QSP model as the encoder.
+\end{itemize}
+\vspace{10pt}
+
+\textbf{Goodman Cancer Research Center}, Montréal, QC, Canada \hfill (2019 - 2020)
+\begin{itemize}
+    \item[] Research Associate, Supervisor: Uri David Akavia
+    \item[] \textbf{Project}: Optimizing the methodology to clarify the role of anti-EGFR nanobodies in promoting endocytosis of CRISPR-Cas9 complexes for conferring synthetic lethality to cisplatin in A549 lung carcinoma via homologous directed repair.
+\end{itemize}
+\vspace{10pt}
+
+\textbf{Jenthera Therapeutics (admare/neomed bioinovations)}, Montréal, QC, Canada \hfill (2020-2021)
+\begin{itemize}
+    \item[] Consultant Research Scientist, Supervisor: Phillip Roche
+    \item[] \textbf{Project}: Molecular cloning, Phage display library generation and screening for raising new nanobodies via magnetic sorting and flow cytometry (FACS), large scale protein expression and purification, dye conjugation and protein fusion, Immunohistochemistry and Western Blot for testing and validation, Image analysis with ImageJ (Fiji) custom macros and Computer Vision algorithms.
+\end{itemize}
+
+
+\section*{Publications}
+\begin{itemize}[leftmargin=1em]
+    \item Iqraa Dhoparee-Doomah, Yichen Li, Manal Al Dow, \textbf{Shayan Hajhashemi}, \textit{et al.} (2026).
+    \emph{A Measurable Systemic Immune Phenotype Links Circulating Myeloid Dysfunction to Tumour Spatial Organization in Gastroesophageal Adenocarcinoma}.
+    bioRxiv preprint. \href{https://doi.org/10.64898/2026.09.17.752366}{DOI: 10.64898/2026.09.17.752366}.
+
+    \item \textbf{Shayan Hajhashemi}, Amin Emad, Morgan Craig (2026).
+    \emph{DiffDose: Differentiable Programming for Personalized Dose-Regimen Optimal Control}.
+    bioRxiv preprint. \href{https://doi.org/10.64898/2026.09.07.749974}{DOI: 10.64898/2026.09.07.749974}.
+    Under review at \emph{npj Systems Biology and Applications}.
+
+    \item Ali Poursina, \textbf{Shayan Hajhashemi}, Arsham Mikaeili Namini, Ali Saberi, Amin Emad, Hamed S.~Najafabadi (2026).
+    \emph{A Latent Space Thermodynamic Model of Cell Differentiation}.
+    bioRxiv preprint. \href{https://doi.org/10.64898/2026.03.04.709512}{DOI: 10.64898/2026.03.04.709512}.
+
+    \item Vincent Lemaire, \textbf{Shayan Hajhashemi}, Anand Rotte, Arman Seyed-Ahmadi, Shubham Tripathi, Pascal Chanu, Benjamin Wu, Chunze Li, Saroja Ramanujan, Kapil Gadkar, Jin Jin.
+    \emph{Explainability analysis of QSP-derived virtual populations identifies robust pre-treatment biomarkers of immunotherapy}.
+    Under review at \emph{npj Precision Oncology}.
+
+    \item Philip Roche, \textbf{Shayan Hajhashemi}, Uri David Akavia (2020).
+    \emph{Nanobody administration of Cas9 improves nuclear localization and HDR-enhanced synthetic lethality in A549 lung carcinoma}.
+    Withdrawn for intellectual property reasons.
+\end{itemize}
+
+
+\cvsection{Invited Talks}
+\begin{itemize}[leftmargin=1em]
+    \item \href{https://meetings.siam.org/sess/dsp_talk.cfm?p=157552}{\textbf{Real-MVP: Virtual Populations As Simulation-Based Conditional Neural Densities}}.\\
+    Invited minisymposium talk, \emph{SIAM Conference on the Life Sciences (LS26)}, Cleveland, Ohio, July 6, 2026.\\
+    Minisymposium MS11: \emph{Recent Advances in Digital Twins and Trial Simulations to Guide Clinical Decisions}.
+\end{itemize}
+
+
+\cvsection{Academic Projects}
+\indent
+
+\textbf{Latent Space Dynamics (LSD): RNA-Velocity, Gene perturbation and cell-fate specification}\\
+\indent
+\textit{McGill University Human Genetics \& MILA, Supervisors: Amin Emad and Hamed Najafabadi} \hfill March 2024
+\begin{itemize}
+    \item[] Bayesian Neural-ODE modeling of single-cell RNA-seq data for trajectory analysis.
+    \item[] Implementation in Pyro and PyTorch
+\end{itemize}
+
+\textbf{Spatial Pattern Bifurcations in NPZ reaction-diffusion models with delayed recycling}\\
+\indent
+\textit{McGill University Department of Biology, Supervisor: Frederic Guichard } \hfill August 2022
+\begin{itemize}
+    \item[] Local Perturbation analysis of conserved Nutrient-Phytoplankton-Zooplankton with delayed nutrient recycling.
+    \item[] Used XPP-Auto, MatCont, Mathematica, MATLAB, Python, and simulation packages in Julia to analyze nonlinear reaction-diffusion PDEs.
+\end{itemize}
+
+\textbf{Novelty Search in Evolutionary Algorithms for evolving Dynamical Systems with specific properties}\\
+\indent
+\textit{McGill University Department of Physics, Supervisor: Paul Francois } \hfill April 2022
+\begin{itemize}
+    \item[] Used methods for embedding timeseries including Spectral methods (Fourier and wavelet mode decomposition) and Machine learning (Transformer, LSTM autoencoder, ARIMA model) to define novelty metrics.
+\end{itemize}
+
+\textbf{Mining and Validating Fuzzy 3D RNA motifs using a Relational Graph Convolutional Network model}\\
+\indent
+\textit{McGill University Department of Computer Science, Supervisor: Jerome Waldispuhl } \hfill December 2021
+\begin{itemize}
+    \item[] Used methods for embedding graphs and finding distance between molecular structures, Quaternion characteristic polynomial for molecular superimposition, Machine learning (RGCN and clustering), Optimized Graph Edit Distance.
+\end{itemize}
+
+\begin{samepage}
+\textbf{Modeling Immune Cell polarization in cell motility using Reaction-Diffusion equations and cellular Potts}\\
+\indent
+\textit{McGill University Department of Physiology, Supervisors: Anmar Khadra \& Laurent Mackay} \hfill August 2021
+\begin{itemize}
+    \item[] Generate ODEs from biochemical reaction scheme, make into RD equations or simulate with cellular Potts model.
+    \item[] Analyze bifurcation structure and steady states with XPP-Auto and perform local perturbation analysis.Code optimization in Matlab with GPU acceleration.
+\end{itemize}
+\end{samepage}
+
+
+
+% teaching experience
+\cvsection{Teaching Experience}
+\indent
+
+\textbf{Foundations in Quantitative Life Sciences (600-level, graduate)}\hfill Fall 2022
+
+\hspace{2em}Teaching Assistant, with Prof. Leon Glass, at McGill University
+
+\hspace{2em}Introduction to Nonlinear Dynamical Systems and Computational Methods in Neurophysiology and Genetics\\
+
+\textbf{Metabolic Biochemistry (300-level Undergradute)}\hfill Fall 2022
+
+\hspace{2em}Teaching Assistant, with Prof. Lawrence Kazak, at McGill University
+
+\hspace{2em} Thermodynamics and biochemistry of metabolic pathways.\\
+
+\textbf{Scientific Machine Learning and ODEs in Julia (departmental workshop)}\hfill Fall 2023
+
+\hspace{2em}Instructor, at McGill University
+
+% academic service
+\cvsection{Academic Service}
+\indent
+
+\textbf{Conference Reviewer}, JULIA conference review of posters, talks and abstracts. \hfill (2024)
+
+\textbf{Funding Editor}, NSERC, CIHR, FRQ travel awards internal reviewer \hfill (2023)
+
+\textbf{Columnist}, local scientific popularization of cutting-edge health research \hfill (2019-2020)
+
+\textbf{Volunteer}, local university hospital ICU volunteering \hfill (2019-Present)
+
+
+% distinction, award, honor, and fellowship
+
+\cvsection{Awards \& Distinctions}
+\indent
+\begin{enumerate}
+    \item \textbf{Awarded Canadian Graduate Scholarship - Doctoral (NSERC-CGS D) }\hfill 2023 - 2026
+    \begin{itemize}[leftmargin=1em, itemsep=0pt]
+        \item[] \textit{105'000 \$ over 3 years},
+        \item[] \textbf{Title} : Inverse Methods for Discovering Underlying Biochemical Interactions from Time Series of Metabolomics data.
+    \end{itemize}
+
+    \item \textbf{Awarded Quebec Graduate Scholarship - Health Stream (FRQ-Santé)}\hfill 2023 - 2026
+    \begin{itemize}[leftmargin=1em,itemsep=0pt]
+        \item[] \textit{63'000 \$ over 3 years},
+        \item[] \textbf{Title} : Cyclic Thrombocytopenia: Mechanism and Treatment of a Dynamic Disease via Mathematics
+    \end{itemize}
+
+    \item \textbf{Winner of the department's 3-minute thesis competition}, \hfill December 2022
+
+    \item \textbf{Michael Wing Kin Chan and Lina Lai Yan Chan Scholarship in Science}\hfill 2020 - 2021
+    \begin{itemize}[leftmargin=1em,itemsep=0pt]
+        \item[] \textit{5'000 \$ over 2 years},
+    \end{itemize}
+
+    \item \textbf{Dean's Multidisciplinary First Class Honors} \hfill 2019 - 2021
+
+    \item \textbf{Undergraduate Research Award (NSERC-FRQNT Supplement)} \hfill 2020
+    \begin{itemize}[leftmargin=1em,itemsep=0pt]
+        \item[] \textit{9'000 \$},
+    \end{itemize}
+\end{enumerate}
+
+
+\begin{samepage}
+\cvsection{Art \& Culture projects}
+\indent
+
+\textbf{Anonymous Survey Web App: readtheroom}\\
+\indent
+\textit{McGill University, Physics Hackathon Staff } \hfill December 2023
+\begin{itemize}
+    \item[] Check it out: \url{https://readtheroom.site/}
+    \item[] Used Jinja inside Flask and pgsql4 backend to implement question and answer UI. PyPlot data vizualisation.
+\end{itemize}
+
+\textbf{Implementing real-time object detection for identification of turtle species (workshop)}\\
+\indent
+\textit{McGill University \& Kuper Academy, } \hfill October 2021
+\begin{itemize}
+    \item[] GitHub Link: \url{https://tinyurl.com/turtledetector}
+    \item[] Used PyTorch Mobile and Onnx for exporting the trained YOLOv5 convolutional model.
+    \item[] Workshop at Kuper Academy for highschool students.
+\end{itemize}
+\end{samepage}
+
+
+% % language
+% \cvsection{Language}
+% \indent
+
+% Native \textbf{English}, Native \textbf{Farsi}, Fluent \textbf{French}, Functional Spanish
+
+
+% % other things
+% \cvsection{Technical Skills}
+% \indent
+
+% \textbf{Laboratory Techniques:}
+% \begin{itemize}
+%     \item[] Experienced in routine genetics, biochemistry, and immunology workflows.
+%     \item[] Proficient with methods in structural biology, genome-wide association studies (GWAS), and gene regulatory networks.
+% \end{itemize}
+
+% \textbf{Computer Science:}
+% \begin{itemize}
+%     \item[] Comfortable with PyTorch, proficient with JAX for implementing neural ordinary differential equations (neural-ODEs).
+%     \item[] Experienced in scientific machine learning in Julia
+% \end{itemize}
+
+% \textbf{Applied Mathematics:}
+% \begin{itemize}
+%     \item[] Experienced with XPPAuto and Auto-07p for dynamical systems analysis.
+%     \item[] Implementing reaction-diffusion PDE simulations and Cellular-Potts models in Julia, MATLAB, and Python.
+% \end{itemize}
+
+
+
+\vfill
+
+% \section*{\hfill\color{OliveGreen}\today}
+
+\end{document}
