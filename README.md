@@ -16,7 +16,7 @@ Open http://localhost:4173. The Lorenz article is at http://localhost:4173/notes
 
 The PANDA exploration is at http://localhost:4173/notes/steering-a-forecasting-model.html. It follows activation steering, a search for an oscillatory bifurcation, and an SMWM-inspired model of activation dynamics. Its three figures distinguish a separate toy system, an actual PANDA noise-to-cycle forecast edit, and measured control results.
 
-Keep the agreed design: white paper, one font at two text sizes, minimal sections, the Carl Angel-5 model, and red/blue/black enamel choices. The Lorenz note now uses the provenance-matched extended figure with integral-matching Lorenz, Panda, and Chronos-T5, and records the later weak-loss Panda-to-SINDy experiment. The notebook contains the three full research entries; the sample posts and their dialog have been removed.
+Keep the agreed design: white paper, one font at two text sizes, minimal sections, the Carl Angel-5 model, and red/blue/black/green enamel choices. The Lorenz note now uses the provenance-matched extended figure with integral-matching Lorenz, Panda, and Chronos-T5, and records the later weak-loss Panda-to-SINDy experiment. The notebook contains the three full research entries; the sample posts and their dialog have been removed.
 
 For an existing checkout on another machine, update its remote once:
 
@@ -60,15 +60,15 @@ Visit http://localhost:4173. No build or npm install is required. Typography use
 - `assets/lorenz/survival-extension.csv`: exact integral-matching, Panda, and Chronos summary values used in the extended figure discussion.
 - `assets/lorenz/conditioner-results.csv`: exact source-gate and reserved-Lorenz values from the weak/Birkhoff conditioner study.
 - `assets/lorenz/provenance.json`: source hash, extraction scope, and references.
-- `sharpener-model.js`: editable 3D geometry and enamel materials; the crank is a separate rotating group.
+- `sharpener-model.js`: editable 3D geometry and enamel materials; clamp, drawer, and crank are separate moving groups.
 - `sharpener-viewer.js`: studio lighting, pointer/keyboard controls, on-demand rendering, and WebGL fallback.
 - `assets/angel-5.glb`: portable red model, including the drawer label and separate crank parts.
-- `assets/angel-5-{red,blue,black}.png`: rendered fallback images of the model.
+- `assets/angel-5-{red,blue,black,green}.png`: rendered fallback images of the model.
 - `tools/export-sharpener.html`: open through the local server to export a fresh GLB after editing the geometry.
 - `assets/vendor/THREE-README.md`: renderer version, source, build command, and license.
 - `assets/angel-5.svg`: earlier editable vector illustration, retained for reference.
 
-The Lorenz, PANDA, and OIL entries are research drafts grounded in saved experimental results and local evidence. The enamel controls switch between red, blue, and black and save the choice in the browser. Each research entry has a standalone HTML page. Article text works without JavaScript; equations remain readable LaTeX source until the local renderer runs. Shared math styles keep display equations horizontally scrollable on narrow screens and KaTeX provides accessible MathML.
+The Lorenz, PANDA, and OIL entries are research drafts grounded in saved experimental results and local evidence. The enamel controls switch between red, blue, black, and green and save the choice in the browser. Each research entry has a standalone HTML page. Article text works without JavaScript; equations remain readable LaTeX source until the local renderer runs. Shared math styles keep display equations horizontally scrollable on narrow screens and KaTeX provides accessible MathML.
 
 The article uses the extended three-panel survival plot copied unchanged from `artifacts/v2/tsfm_integral_survival/forecast_survival__all_tracks__noisy_levels.png`; a matching PDF is included. Its PNG and PDF SHA256 hashes were verified against the source result manifest. The title-free plot uses one boxed legend, partitioned into four information-track columns and containing all 16 methods. The post explicitly separates state-only dynamics learning, known-form parameter estimation, exact-physics surrogates, externally pretrained forecasting, and the later amortized Panda-to-SINDy experiment.
 
@@ -96,9 +96,13 @@ Cards are ordinary links with decorative 3D views. The scenes initialize near th
 
 ## Sharpener controls
 
-Drag the model to rotate it, or focus it and use the arrow keys. Home resets the view; Enter, Space, or **Turn handle** turns the rear crank. Enamel controls change only the painted parts. The scene renders on demand and remains still when idle. Reduced-motion mode advances the crank one step without animation. On phones, vertical touch movement still scrolls the page.
+Click either black top holder or the chrome face to slide the pencil clamp forward on its rails. Click the clear shavings bin to pull it out, or the rear crank to turn it. Click the holder or bin again to close it. The **Holder**, **Bin**, and **Turn handle** buttons offer the same actions.
 
-The model uses one rounded shell with a drawer opening, an aligned bowed chrome face, short feed tabs, four low rubber pads, and a flat rear crank with a ribbed grip. The fallback PNGs use the same geometry, view, and lighting; regenerate them when the model changes. The GLB is an export for editing in other 3D tools; the homepage generates geometry directly from `sharpener-model.js`.
+Drag the model to rotate it, or focus it and use the arrow keys. Home resets the view; H toggles the holder, B toggles the bin, and Enter or Space turns the crank. A drag never activates the part it started on, and vertical touch movement still scrolls the page. Reduced-motion mode opens parts instantly and advances the crank one step. The scene renders on demand and stays still when idle.
+
+Red, blue, black, and green enamel choices persist across the site. Only painted model parts change color; the notebook uses the corresponding accent. Each color has a matching static preview when WebGL is unavailable. The PNG previews and exported GLB are regenerated from the same model. Direct-part interaction and fallback checks run with the browser-test setup below, using `tests/sharpener-browser.test.mjs`.
+
+The model uses one rounded shell with a drawer opening, an aligned bowed chrome face, short feed tabs, four low rubber pads, and a flat rear crank with a ribbed grip. The clamp moves forward 0.5 model units; the bin moves 0.7 units, carrying its label and shavings. The motion follows the [CARL loading instructions](https://www.carlmfg.com/faq/pencil-sharpener). The fallback PNGs use the same geometry, view, and lighting; regenerate them when the model changes. The GLB is an export for editing in other 3D tools; the homepage generates geometry directly from `sharpener-model.js`.
 
 ## PANDA figure regeneration
 

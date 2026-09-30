@@ -1,7 +1,7 @@
 import * as THREE from './assets/vendor/three.module.js';
 
 // All parts share one coordinate system: y is up; the pencil enters at +z.
-// The crank has its own pivot on the rear shaft, so it can turn as an assembly.
+// Clamp, drawer and crank move as separate assemblies around a fixed body.
 export function createSharpener() {
   const group = new THREE.Group();
   group.name = 'Carl Angel-5';
@@ -94,8 +94,24 @@ export function createSharpener() {
     }
   }
 
-  // A slim metal rim and curved clamp plate have a real opening for the pencil.
-  box(1.29, 1.095, 0.115, 0.17, rubber, 'Clamp backing', [0, 0.49, 0.728]);
+  // Pulling the front housing exposes its guide rails and the recessed feed
+  // mechanism. The rear cover stays with the enamel body, behind the moving plate.
+  box(1.13, 0.92, 0.025, 0.1, satin, 'Fixed front mechanism surround', [0, 0.49, 0.719]);
+  box(1.035, 0.81, 0.017, 0.074, inside, 'Recess behind the pencil clamp', [0, 0.49, 0.738]);
+  cylinder(0.15, 0.025, black, 'Recessed pencil feed opening', [0, 0.487, 0.755]);
+  ring(0.15, 0.025, darkMetal, 'Fixed pencil feed collar', [0, 0.487, 0.775]);
+  const guides = [-0.46, 0.46].map(x => {
+    cylinder(0.058, 0.035, darkMetal, 'Clamp guide-rail socket', [x, 0.82, 0.749]);
+    return cylinder(0.027, 1, chrome, 'Sliding chrome clamp guide rail', [x, 0.82, 0.749]);
+  });
+
+  const clamp = new THREE.Group();
+  clamp.name = 'Pull-out pencil clamp';
+  clamp.userData.action = 'clamp';
+  group.add(clamp);
+  // The bowed chrome face, pencil aperture and both black feed tabs travel
+  // together. Their closed positions retain the original fitted silhouette.
+  box(1.29, 1.095, 0.115, 0.17, rubber, 'Clamp backing', [0, 0.49, 0.728], clamp);
   const plateProfile = new THREE.Shape();
   plateProfile.moveTo(-0.43, 0.46);
   plateProfile.lineTo(0.43, 0.46);
@@ -126,22 +142,23 @@ export function createSharpener() {
     const normal = new THREE.Vector3(nx - dx * nz, ny - dy * nz, nz).normalize();
     plateNormals.setXYZ(i, normal.x, normal.y, normal.z);
   }
-  const plate = mesh(plateGeometry, chrome, 'Bowed chrome pencil clamp');
+  const plate = mesh(plateGeometry, chrome, 'Bowed chrome pencil clamp', clamp);
   plate.position.set(0, 0.505, 0.802);
-  cylinder(0.088, 0.105, black, 'Dark pencil aperture', [0, 0.487, 0.828]);
-  ring(0.104, 0.02, chrome, 'Pencil aperture lip', [0, 0.487, 0.916]);
-  ring(0.087, 0.008, darkMetal, 'Inner pencil guide', [0, 0.487, 0.912]);
+  cylinder(0.088, 0.105, black, 'Dark pencil aperture', [0, 0.487, 0.828], clamp);
+  ring(0.104, 0.02, chrome, 'Pencil aperture lip', [0, 0.487, 0.916], clamp);
+  ring(0.087, 0.008, darkMetal, 'Inner pencil guide', [0, 0.487, 0.912], clamp);
 
   // Both feed tabs use the same height and depth, anchored to the front mechanism.
   for (const x of [-0.30, 0.30]) {
-    box(0.12, 0.19, 0.12, 0.017, satin, 'Feed-tab stem', [x, 1.032, 0.717]);
-    box(0.245, 0.23, 0.225, 0.026, rubber, 'Black pencil-feed tab', [x, 1.163, 0.717]);
+    box(0.12, 0.19, 0.12, 0.017, satin, 'Feed-tab stem', [x, 1.032, 0.717], clamp);
+    box(0.245, 0.23, 0.225, 0.026, rubber, 'Black pencil-feed tab', [x, 1.163, 0.717], clamp);
   }
   box(0.71, 0.014, 0.27, 0.045, satin, 'Inset top maker plate', [0, 1.079, -0.13]);
 
   // Clear drawer: thin individual walls preserve its empty volume and visible contents.
   const drawer = new THREE.Group();
   drawer.name = 'Clear removable shavings drawer';
+  drawer.userData.action = 'drawer';
   group.add(drawer);
   const front = box(1.165, 0.815, 0.029, 0.024, glass, 'Clear drawer face', [0, -0.5, 0.763], drawer);
   front.renderOrder = 3;
@@ -151,6 +168,8 @@ export function createSharpener() {
   }
   const floor = box(1.13, 0.022, 1.14, 0.006, glass, 'Clear drawer floor', [0, -0.884, 0.185], drawer);
   floor.renderOrder = 2;
+  const back = box(1.13, 0.78, 0.025, 0.006, glass, 'Clear drawer back wall', [0, -0.5, -0.385], drawer);
+  back.renderOrder = 2;
   // Moulded edges are solid enough to read at the small homepage size.
   for (const x of [-0.568, 0.568]) {
     box(0.022, 0.795, 0.031, 0.009, glassEdge, 'Drawer vertical edge', [x, -0.5, 0.784], drawer).renderOrder = 4;
@@ -213,6 +232,7 @@ export function createSharpener() {
   ring(0.116, 0.023, chrome, 'Rear axle collar', [0, 0.48, -0.778]);
   const crank = new THREE.Group();
   crank.name = 'Rotating rear crank';
+  crank.userData.action = 'crank';
   crank.position.set(0, 0.48, -0.962);
   group.add(crank);
   cylinder(0.145, 0.13, chrome, 'Crank axle hub', [0, 0, -0.027], crank);
@@ -240,11 +260,26 @@ export function createSharpener() {
     red: ['#aa3532', '#8e2d2a'],
     blue: ['#397d94', '#2b6276'],
     black: ['#343b37', '#272d2a'],
+    green: ['#47775b', '#315840'],
   };
   const setEnamel = (color) => {
     const palette = colors[color] || colors.red;
     enamelMaterials.forEach((material, i) => material.color.set(palette[i]));
   };
 
-  return { group, crank, enamelMaterials, setEnamel };
+  const fractionOf = value => Number.isFinite(value) ? THREE.MathUtils.clamp(value, 0, 1) : 0;
+  const setClampExtension = fraction => {
+    const extension = fractionOf(fraction) * 0.5;
+    clamp.position.z = extension;
+    guides.forEach(guide => {
+      // The short closed rail sits inside the backing, so exports retain it.
+      guide.scale.y = extension + 0.015;
+      guide.position.z = 0.729 + (extension + 0.015) / 2;
+    });
+  };
+  const setDrawerExtension = fraction => { drawer.position.z = fractionOf(fraction) * 0.7; };
+  setClampExtension(0);
+  setDrawerExtension(0);
+
+  return { group, crank, clamp, drawer, enamelMaterials, setEnamel, setClampExtension, setDrawerExtension };
 }

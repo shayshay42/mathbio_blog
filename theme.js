@@ -1,7 +1,7 @@
 (() => {
   const swatches = document.querySelectorAll('button[data-enamel]');
   function setEnamel(color) {
-    if (!['red', 'blue', 'black'].includes(color)) return;
+    if (!['red', 'blue', 'black', 'green'].includes(color)) return;
     document.documentElement.dataset.enamel = color;
     swatches.forEach(swatch => swatch.setAttribute('aria-pressed', String(swatch.dataset.enamel === color)));
     const sharpener = document.querySelector('.sharpener');

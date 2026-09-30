@@ -21,7 +21,7 @@ function mountSharpener(host) {
   canvas.tabIndex = 0;
   canvas.setAttribute('role', 'img');
   canvas.setAttribute('aria-describedby', 'sharpener-help');
-  canvas.setAttribute('aria-keyshortcuts', 'ArrowLeft ArrowRight ArrowUp ArrowDown Home Enter Space');
+  canvas.setAttribute('aria-keyshortcuts', 'ArrowLeft ArrowRight ArrowUp ArrowDown Home Enter Space H B');
 
   const scene = new THREE.Scene();
   const model = createSharpener();
@@ -81,6 +81,61 @@ function mountSharpener(host) {
   let drag = null;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const controls = document.querySelector('.sharpener-controls');
+  const holderButton = controls.querySelector('[data-action="clamp"]');
+  const drawerButton = controls.querySelector('[data-action="drawer"]');
+  const turnButton = controls.querySelector('[data-action="turn"]');
+  const status = document.querySelector('#sharpener-status');
+  const slides = {
+    clamp: { value: 0, target: 0, active: false, apply: model.setClampExtension },
+    drawer: { value: 0, target: 0, active: false, apply: model.setDrawerExtension },
+  };
+  const raycaster = new THREE.Raycaster();
+  const pointer = new THREE.Vector2();
+  host.dataset.clampOpen = 'false';
+  host.dataset.drawerOpen = 'false';
+  host.dataset.turning = 'false';
+
+  function updateCamera() {
+    camera.position.set(7 * Math.sin(yaw) * Math.cos(pitch), 7 * Math.sin(pitch), 7 * Math.cos(yaw) * Math.cos(pitch));
+    camera.lookAt(0, 0.02, -0.15);
+    camera.updateMatrixWorld();
+  }
+
+  // Test the first visible surface, including the shell, so a hidden handle
+  // cannot be clicked through the body. Child meshes inherit their part's action.
+  function pickAction(event) {
+    if (contextLost) return null;
+    const rect = canvas.getBoundingClientRect();
+    pointer.set((event.clientX - rect.left) / rect.width * 2 - 1, -(event.clientY - rect.top) / rect.height * 2 + 1);
+    updateCamera();
+    scene.updateMatrixWorld(true);
+    raycaster.setFromCamera(pointer, camera);
+    const hit = raycaster.intersectObject(model.group, true).find(intersection => {
+      for (let part = intersection.object; part; part = part.parent) {
+        if (!part.visible) return false;
+      }
+      return true;
+    });
+    let part = hit?.object;
+    while (part && part !== model.group) {
+      if (part.userData.action) return part.userData.action;
+      part = part.parent;
+    }
+    return null;
+  }
+
+  function clearHover() {
+    delete canvas.dataset.part;
+    canvas.removeAttribute('title');
+  }
+
+  function updateHover(event) {
+    const action = pickAction(event);
+    if (!action) { clearHover(); return; }
+    canvas.dataset.part = action;
+    canvas.title = action === 'clamp' ? (slides.clamp.target ? 'Close pencil holder' : 'Pull out pencil holder')
+      : action === 'drawer' ? (slides.drawer.target ? 'Close shavings bin' : 'Pull out shavings bin') : 'Turn handle';
+  }
 
   function requestRender() {
     if (!frame && visible && !contextLost && !document.hidden) frame = requestAnimationFrame(render);
@@ -88,24 +143,83 @@ function mountSharpener(host) {
   function render(time) {
     frame = 0;
     if (contextLost || !visible || document.hidden) return;
-    camera.position.set(7 * Math.sin(yaw) * Math.cos(pitch), 7 * Math.sin(pitch), 7 * Math.cos(yaw) * Math.cos(pitch));
-    camera.lookAt(0, 0.02, -0.15);
+    updateCamera();
+    for (const slide of Object.values(slides)) {
+      if (!slide.active) continue;
+      const progress = Math.min((time - slide.start) / 420, 1);
+      const eased = progress * progress * (3 - 2 * progress);
+      slide.value = slide.from + (slide.target - slide.from) * eased;
+      slide.apply(slide.value);
+      if (progress === 1) slide.active = false;
+    }
     if (turning) {
       const progress = Math.min((time - turning.start) / 1000, 1);
       const eased = progress * progress * (3 - 2 * progress);
       model.crank.rotation.z = turning.angle - Math.PI * 2 * eased;
-      if (progress === 1) { model.crank.rotation.z %= Math.PI * 2; turning = null; }
+      if (progress === 1) finishTurn();
     }
     renderer.render(scene, camera);
-    if (turning) requestRender();
+    if (turning || Object.values(slides).some(slide => slide.active)) requestRender();
   }
+
+  function finishTurn() {
+    if (!turning) return;
+    model.crank.rotation.z = (turning.angle - Math.PI * 2) % (Math.PI * 2);
+    turning = null;
+    turnButton.disabled = false;
+    host.dataset.turning = 'false';
+    status.textContent = 'Handle turned.';
+  }
+
   function turnHandle() {
     if (turning) return;
     if (reducedMotion.matches) {
-      model.crank.rotation.z -= Math.PI / 3;
+      model.crank.rotation.z = (model.crank.rotation.z - Math.PI / 3) % (Math.PI * 2);
+      status.textContent = 'Handle turned one step.';
     } else {
       turning = { start: performance.now(), angle: model.crank.rotation.z };
+      turnButton.disabled = true;
+      host.dataset.turning = 'true';
+      status.textContent = 'Turning the handle.';
     }
+    requestRender();
+  }
+
+  function toggleSlide(name) {
+    const slide = slides[name];
+    slide.target = slide.target ? 0 : 1;
+    slide.from = slide.value;
+    slide.start = performance.now();
+    slide.active = !reducedMotion.matches;
+    if (!slide.active) {
+      slide.value = slide.target;
+      slide.apply(slide.value);
+    }
+    const open = Boolean(slide.target);
+    const button = name === 'clamp' ? holderButton : drawerButton;
+    button.setAttribute('aria-pressed', String(open));
+    button.setAttribute('aria-label', `${open ? 'Close' : 'Open'} ${name === 'clamp' ? 'pencil holder' : 'shavings bin'}`);
+    host.dataset[name === 'clamp' ? 'clampOpen' : 'drawerOpen'] = String(open);
+    status.textContent = name === 'clamp'
+      ? (open ? 'Pencil holder open. Ready to load a pencil.' : 'Pencil holder closed.')
+      : (open ? 'Shavings bin pulled out.' : 'Shavings bin closed.');
+    clearHover();
+    requestRender();
+  }
+
+  function activate(action) {
+    if (contextLost) return;
+    if (action === 'clamp' || action === 'drawer') toggleSlide(action);
+    if (action === 'crank' || action === 'turn') turnHandle();
+  }
+
+  function finishMotions() {
+    for (const slide of Object.values(slides)) {
+      slide.value = slide.target;
+      slide.active = false;
+      slide.apply(slide.value);
+    }
+    finishTurn();
     requestRender();
   }
   function updateEnamel(color) {
@@ -127,17 +241,39 @@ function mountSharpener(host) {
   }
 
   canvas.addEventListener('pointerdown', event => {
-    if (event.button !== 0 || drag) return;
-    drag = { id: event.pointerId, x: event.clientX, y: event.clientY, yaw, pitch };
+    if (event.button !== 0 || event.isPrimary === false || drag) return;
+    drag = { id: event.pointerId, x: event.clientX, y: event.clientY, yaw, pitch,
+      threshold: event.pointerType === 'touch' ? 8 : 6, moved: false, action: pickAction(event) };
+    if (event.pointerType === 'mouse') canvas.focus({ preventScroll: true });
     canvas.setPointerCapture(event.pointerId);
   });
   canvas.addEventListener('pointermove', event => {
-    if (!drag || drag.id !== event.pointerId) return;
-    yaw = drag.yaw - (event.clientX - drag.x) * 0.013;
-    pitch = THREE.MathUtils.clamp(drag.pitch + (event.clientY - drag.y) * 0.01, -0.12, 0.75);
+    if (!drag) { if (event.pointerType === 'mouse') updateHover(event); return; }
+    if (drag.id !== event.pointerId) return;
+    const dx = event.clientX - drag.x, dy = event.clientY - drag.y;
+    if (Math.hypot(dx, dy) > drag.threshold) drag.moved = true;
+    if (!drag.moved) return;
+    canvas.dataset.dragging = 'true';
+    clearHover();
+    yaw = drag.yaw - dx * 0.013;
+    pitch = THREE.MathUtils.clamp(drag.pitch + dy * 0.01, -0.12, 0.75);
     requestRender();
   });
-  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(type => canvas.addEventListener(type, () => { drag = null; }));
+  function releasePointer() {
+    drag = null;
+    delete canvas.dataset.dragging;
+  }
+  canvas.addEventListener('pointerup', event => {
+    if (!drag || drag.id !== event.pointerId) return;
+    const pressed = drag;
+    const clicked = !pressed.moved && Math.hypot(event.clientX - pressed.x, event.clientY - pressed.y) <= pressed.threshold;
+    releasePointer();
+    if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
+    if (clicked && pressed.action && pickAction(event) === pressed.action) activate(pressed.action);
+    if (event.pointerType === 'mouse') updateHover(event);
+  });
+  ['pointercancel', 'lostpointercapture'].forEach(type => canvas.addEventListener(type, releasePointer));
+  canvas.addEventListener('pointerleave', () => { if (!drag) clearHover(); });
   canvas.addEventListener('keydown', event => {
     switch (event.key) {
       case 'ArrowLeft': yaw -= 0.18; break;
@@ -146,17 +282,25 @@ function mountSharpener(host) {
       case 'ArrowDown': pitch = Math.max(pitch - 0.12, -0.12); break;
       case 'Home': yaw = initial.yaw; pitch = initial.pitch; break;
       case 'Enter': case ' ': turnHandle(); break;
+      case 'h': case 'H': toggleSlide('clamp'); break;
+      case 'b': case 'B': toggleSlide('drawer'); break;
       default: return;
     }
     event.preventDefault();
     requestRender();
   });
-  controls.querySelector('button').addEventListener('click', turnHandle);
+  controls.querySelectorAll('button[data-action]').forEach(button => {
+    button.addEventListener('click', () => activate(button.dataset.action));
+  });
+  reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) finishMotions(); });
   document.addEventListener('enamelchange', event => updateEnamel(event.detail.color));
   document.addEventListener('visibilitychange', requestRender);
   canvas.addEventListener('webglcontextlost', event => {
     event.preventDefault();
     contextLost = true;
+    releasePointer();
+    clearHover();
+    finishMotions();
     host.classList.remove('is-ready');
     controls.hidden = true;
     canvas.hidden = true;
@@ -175,8 +319,7 @@ function mountSharpener(host) {
   new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; if (visible) requestRender(); }).observe(host);
   updateEnamel(document.documentElement.dataset.enamel || 'red');
   resize();
-  camera.position.set(7 * Math.sin(yaw) * Math.cos(pitch), 7 * Math.sin(pitch), 7 * Math.cos(yaw) * Math.cos(pitch));
-  camera.lookAt(0, 0.02, -0.15);
+  updateCamera();
   renderer.render(scene, camera);
   host.append(canvas);
   host.classList.add('is-ready');

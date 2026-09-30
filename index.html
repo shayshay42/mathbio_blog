@@ -38,16 +38,20 @@
           <div class="sharpener-view" aria-label="Carl Angel-5 pencil sharpener">
             <img class="sharpener" data-preview src="assets/angel-5-red.png" width="640" height="640" alt="A cartoon-style red Carl Angel-5 pencil sharpener, with a chrome face, rear hand crank, and clear shavings drawer.">
           </div>
-          <div class="sharpener-controls" hidden>
-            <span aria-hidden="true">Drag to rotate</span>
-            <button type="button" class="turn-handle">Turn handle</button>
+          <div class="sharpener-controls" role="group" aria-label="Sharpener parts" hidden>
+            <span aria-hidden="true">Click parts · Drag to rotate</span>
+            <button type="button" data-action="clamp" aria-label="Open pencil holder" aria-pressed="false">Holder</button>
+            <button type="button" data-action="drawer" aria-label="Open shavings bin" aria-pressed="false">Bin</button>
+            <button type="button" class="turn-handle" data-action="turn">Turn handle</button>
           </div>
-          <span id="sharpener-help" class="visually-hidden">Drag to rotate the model. Use arrow keys to rotate, Home to reset the view, or Enter to turn the handle.</span>
+          <span id="sharpener-help" class="visually-hidden">Click the black top holders to pull out the pencil clamp, the clear bin to slide it out, or the rear handle to turn it. Click the holder or bin again to close it. Drag to rotate. Use arrow keys to rotate, Home to reset the view, H for the holder, B for the bin, or Enter or Space to turn the handle. The buttons below offer the same actions.</span>
+          <span id="sharpener-status" class="visually-hidden" role="status" aria-live="polite"></span>
           <div class="enamel-picker" role="group" aria-label="Choose an enamel color">
             <span>Enamel</span>
             <button type="button" class="swatch red" data-enamel="red" aria-label="Red enamel" aria-pressed="true"></button>
             <button type="button" class="swatch blue" data-enamel="blue" aria-label="Blue enamel" aria-pressed="false"></button>
             <button type="button" class="swatch black" data-enamel="black" aria-label="Black enamel" aria-pressed="false"></button>
+            <button type="button" class="swatch green" data-enamel="green" aria-label="Green enamel" aria-pressed="false"></button>
           </div>
         </div>
       </div>
