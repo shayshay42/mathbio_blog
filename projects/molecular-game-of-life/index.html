@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" data-enamel="red">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Turn a molecule into a starting pattern for Conway’s Game of Life. Search by name, paste SMILES, or try an example.">
+  <title>Molecular Game of Life — Shayan Hajhashemi</title>
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="playground.css">
+  <script src="../../theme.js" defer></script>
+  <script src="playground.js" type="module"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="page">
+    <header class="site-header article-nav">
+      <a href="../../index.html">Shayan Hajhashemi</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="../../index.html#notebook">Notes</a>
+        <a href="../../index.html#projects">Projects</a>
+        <a href="../../publications.html">Publications</a>
+        <a href="https://mila.quebec/en/directory/shayan-hajhashemi">Mila</a>
+        <a href="https://github.com/shayshay42">GitHub <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
+    <main id="main" class="molecular-playground">
+      <h1>Molecular Game of Life</h1>
+      <p class="playground-intro">A molecule becomes a pattern. Conway’s rules take it from there.</p>
+
+      <form id="molecule-form">
+        <fieldset id="molecule-inputs" disabled>
+          <legend class="visually-hidden">Choose a molecule</legend>
+          <div class="molecule-fields">
+            <label for="input-mode">Find by
+              <select id="input-mode" name="mode"><option value="name">Name</option><option value="smiles">SMILES</option></select>
+            </label>
+            <label for="molecule-query" class="molecule-query-label"><span id="query-label">Molecule name</span>
+              <input id="molecule-query" name="molecule" type="text" value="Pemoline" placeholder="e.g. caffeine" maxlength="4000" autocomplete="off" autocapitalize="off" spellcheck="false" required aria-describedby="input-help">
+            </label>
+            <button type="submit" class="load-molecule">Load molecule</button>
+          </div>
+        </fieldset>
+      </form>
+      <p id="input-help" class="input-help">Name searches use PubChem. SMILES and examples are processed in your browser.</p>
+      <fieldset id="example-inputs" class="example-inputs" disabled>
+        <legend class="visually-hidden">Example molecules</legend>
+        <span class="muted">Try</span>
+        <div id="examples" class="example-buttons"></div>
+      </fieldset>
+      <div class="load-status-row">
+        <p id="load-status" role="status" aria-live="polite">Loading the chemistry tools…</p>
+        <button id="retry-engine" type="button" hidden>Retry loading</button>
+      </div>
+
+      <div class="life-controls" role="group" aria-label="Simulation controls">
+        <div class="life-buttons">
+          <button id="play-pause" type="button" disabled>Play</button>
+          <button id="step" type="button" disabled>Step</button>
+          <button id="reset" type="button" disabled>Reset</button>
+        </div>
+        <label for="speed" class="speed-control">Speed <input id="speed" type="range" min="1" max="30" value="10" aria-describedby="speed-unit"><output id="speed-value" for="speed">10</output><span id="speed-unit">/ sec</span></label>
+      </div>
+      <div class="board-heading">
+        <p id="molecule-description">Preparing pemoline</p>
+        <p class="muted">Generation <span id="generation">0</span> · <span id="population">0</span> live</p>
+      </div>
+      <canvas id="life-canvas" width="1000" height="1000" role="img" aria-label="Molecular Game of Life grid. Loading the first molecule.">The simulation requires a browser with canvas support.</canvas>
+      <p id="simulation-status" class="simulation-status" role="status" aria-live="polite">Paused</p>
+
+      <details class="how-it-works">
+        <summary>From molecule to pattern</summary>
+        <p>Each atom is a row and a column in an adjacency matrix. A bond makes a live cell in both directions. Hydrogens are included; single, double, and triple bonds all count as one connection.</p>
+        <p>That matrix sits in the center of a 100 × 100 grid. A live cell survives with two or three neighbours; an empty cell becomes live with three. Updates happen together, and opposite edges join.</p>
+        <p>Atom order affects the starting pattern, so two SMILES strings for the same molecule can produce different evolutions. This is a mathematical visualization, not a chemical simulation. Molecules must have at most 100 atoms including hydrogens.</p>
+        <p class="muted">Molecule names come from <a href="https://pubchem.ncbi.nlm.nih.gov/">PubChem</a>. Structures are read by <a href="https://rdkitjs.com/">RDKit.js</a>. The simulation runs on your device.</p>
+      </details>
+      <noscript><p class="no-script">JavaScript is needed to choose molecules and run the simulation. The explanation above describes how it works.</p></noscript>
+    </main>
+    <footer class="site-footer"><span>A notebook in progress.</span><a href="../../index.html#projects">Back to projects</a></footer>
+  </div>
+</body>
+</html>

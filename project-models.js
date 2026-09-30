@@ -5,6 +5,7 @@ import * as THREE from './assets/vendor/three.module.js';
 export function createProjectLogo(kind) {
   if (kind === 'readtheroom') return createChameleon();
   if (kind === 'rizome') return createRizome();
+  if (kind === 'mol-cgl') return createMolecularLife();
   throw new Error(`Unknown project logo: ${kind}`);
 }
 
@@ -262,5 +263,88 @@ function createRizome() {
     dot.scale.z = 0.55;
     dot.position.set((x - 256) / 210, (256 - y) / 210, 0.138);
   }
+  return group;
+}
+
+function createMolecularLife() {
+  const group = new THREE.Group();
+  group.name = 'Molecular Game of Life — molecule becoming an enamel glider';
+  const carbon = enamel('#344a43', 0.28, 0.18);
+  const oxygen = enamel('#ba3735', 0.24, 0.18);
+  const hydrogen = enamel('#fff8e8', 0.3, 0.1);
+  const bond = enamel('#a7aea3', 0.3, 0.48);
+  const paper = enamel('#f0e7d6', 0.42, 0.1);
+  const empty = enamel('#e0d6c3', 0.48, 0.08);
+  const live = enamel('#b83735', 0.28, 0.14);
+
+  const atom = (point, radius, material, name) => {
+    const mesh = addMesh(group, new THREE.SphereGeometry(radius, 32, 24), material, name);
+    mesh.position.copy(point);
+    return mesh;
+  };
+  const connect = (a, b, radius = 0.068) => {
+    const direction = b.clone().sub(a);
+    const mesh = addMesh(group, new THREE.CylinderGeometry(radius, radius, direction.length(), 20), bond, 'Rounded molecular bond');
+    mesh.position.copy(a).add(b).multiplyScalar(0.5);
+    mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.normalize());
+  };
+
+  // A small ball-and-stick ring with an oxygen branch reads clearly at card
+  // size. The changing depth makes the molecule a solid object from every tilt.
+  const center = new THREE.Vector3(-0.93, 0.05, 0.07);
+  const ring = Array.from({ length: 6 }, (_, i) => {
+    const angle = Math.PI / 6 + i * Math.PI / 3;
+    return new THREE.Vector3(center.x + 0.54 * Math.cos(angle), center.y + 0.54 * Math.sin(angle), center.z + (i % 2 ? -0.05 : 0.1));
+  });
+  ring.forEach((point, i) => connect(point, ring[(i + 1) % ring.length]));
+  ring.forEach((point, i) => {
+    atom(point, 0.2, carbon, 'Green enamel carbon atom');
+    // Keep the right side open so the change from atoms to cells has room.
+    if (i === 0 || i === 5) return;
+    const direction = point.clone().sub(center).normalize();
+    const tip = point.clone().addScaledVector(direction, i === 1 ? 0.43 : 0.36);
+    connect(point, tip, 0.052);
+    atom(tip, i === 1 ? 0.19 : 0.125, i === 1 ? oxygen : hydrogen,
+      i === 1 ? 'Red enamel oxygen atom' : 'Cream enamel hydrogen atom');
+  });
+
+  const roundedSquare = (width, radius) => {
+    const shape = new THREE.Shape();
+    const h = width / 2;
+    shape.moveTo(-h + radius, -h);
+    shape.lineTo(h - radius, -h);
+    shape.quadraticCurveTo(h, -h, h, -h + radius);
+    shape.lineTo(h, h - radius);
+    shape.quadraticCurveTo(h, h, h - radius, h);
+    shape.lineTo(-h + radius, h);
+    shape.quadraticCurveTo(-h, h, -h, h - radius);
+    shape.lineTo(-h, -h + radius);
+    shape.quadraticCurveTo(-h, -h, -h + radius, -h);
+    shape.closePath();
+    return shape;
+  };
+
+  const board = new THREE.Group();
+  board.name = 'Five raised cells forming a Conway glider';
+  board.position.set(1.03, -0.05, 0.02);
+  board.rotation.set(0.07, 0.08, 0.045);
+  group.add(board);
+  relief(board, roundedSquare(1.48, 0.14), paper, 'Rounded cream enamel grid plate', -0.1, 0.11, 0.025);
+  const glider = new Set(['0,1', '1,2', '2,0', '2,1', '2,2']);
+  for (let row = 0; row < 3; row++) {
+    for (let column = 0; column < 3; column++) {
+      const alive = glider.has(`${row},${column}`);
+      const cell = relief(board, roundedSquare(0.375, 0.045), alive ? live : empty,
+        alive ? 'Raised red live cell' : 'Recessed empty grid cell', alive ? 0.035 : 0.016, alive ? 0.125 : 0.015, alive ? 0.024 : 0.008);
+      cell.position.x = (column - 1) * 0.43;
+      cell.position.y = (1 - row) * 0.43;
+    }
+  }
+
+  // The intermediate sphere and rounded cube link the two visual languages.
+  atom(new THREE.Vector3(-0.11, 0.12, 0.16), 0.10, oxygen, 'Atom transitioning into a live cell');
+  const transition = relief(group, roundedSquare(0.16, 0.035), live, 'Small enamel cell between molecule and grid', 0.065, 0.13, 0.012);
+  transition.position.set(0.14, 0.12, 0.065);
+  transition.rotation.z = -0.12;
   return group;
 }

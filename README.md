@@ -4,11 +4,11 @@ A minimal, responsive personal researcher blog inspired by the Carl Angel-5 penc
 
 ## Continue on another machine
 
-The development branch is `draft/research-notebook` in `shayshay42/mathbio_blog`. Source is stored on GitHub; GitHub Pages is disabled and no deployment workflow is included.
+The development branch is `draft/research-notebook` in `shayshay42/shayshay42.github.io`. GitHub Pages publishes the `main` branch at https://shayshay42.github.io/. Draft pushes do not deploy.
 
 ```sh
-git clone --branch draft/research-notebook https://github.com/shayshay42/mathbio_blog.git
-cd mathbio_blog
+git clone --branch draft/research-notebook https://github.com/shayshay42/shayshay42.github.io.git
+cd shayshay42.github.io
 python3 -m http.server 4173 --bind 127.0.0.1
 ```
 
@@ -18,7 +18,16 @@ The PANDA exploration is at http://localhost:4173/notes/steering-a-forecasting-m
 
 Keep the agreed design: white paper, one font at two text sizes, minimal sections, the Carl Angel-5 model, and red/blue/black enamel choices. The Lorenz note now uses the provenance-matched extended figure with integral-matching Lorenz, Panda, and Chronos-T5, and records the later weak-loss Panda-to-SINDy experiment. The notebook contains the three full research entries; the sample posts and their dialog have been removed.
 
-Future commits can be shared with `git push`. Keep deployment disabled until it is explicitly requested.
+For an existing checkout on another machine, update its remote once:
+
+```sh
+git remote set-url origin https://github.com/shayshay42/shayshay42.github.io.git
+git fetch origin
+git switch draft/research-notebook
+git pull --ff-only
+```
+
+Share work with `git push`. To release a validated draft, fast-forward `main` to the reviewed commit and push `main`; Pages publishes that branch. Avoid force pushes. The website repository was renamed from `mathbio_blog`; the molecular Django repositories remain separate.
 
 ## Preview
 
@@ -37,7 +46,7 @@ Visit http://localhost:4173. No build or npm install is required. Typography use
 - `publications.html`: verified bioRxiv preprints, archive links, and research code.
 - `assets/publications.bib`: full-author BibTeX citations for the listed preprints.
 - `math.js`: shared LaTeX rendering for all `.blog-post` articles.
-- `project-models.js`: original 3D adaptations of the Read the Room and Rizome marks.
+- `project-models.js`: original 3D adaptations of the Read the Room and Rizome marks, plus the molecular glider logo.
 - `project-viewer.js`: lazy, on-demand logo rendering and pointer/focus tilt.
 - `assets/projects/`: rendered logo previews for loading, no-JavaScript, and no-WebGL views.
 - `theme.js`: shared enamel theme, persisted across the homepage, articles, and publications.
@@ -79,9 +88,9 @@ The shared navigation links to Notes, Projects, Publications, https://mila.quebe
 
 ## Project cards
 
-The homepage Projects section links directly to [Read the Room](https://readtheroom.site/) and [Rizome Biotech](https://www.rizomebiotech.ai/). Read the Room also links to [Soud Al Kharusi's development story](https://soudkharusi.com/projects/readtheroom-app/). Card descriptions follow those project websites.
+The homepage Projects section links directly to [Read the Room](https://readtheroom.site/), [Rizome Biotech](https://www.rizomebiotech.ai/), and the local [Molecular Game of Life](projects/molecular-game-of-life/). Read the Room also links to [Soud Al Kharusi's development story](https://soudkharusi.com/projects/readtheroom-app/). External card descriptions follow those project websites.
 
-Both logos use real beveled geometry with raised details: Read the Room's chameleon and Rizome's branching medallion. The visual references are the sites' [chameleon mark](https://readtheroom.site/images/RTR-logo_Aug2025.png) and [Rizome mark](https://www.rizomebiotech.ai/favicon.png). The geometry is a stylized adaptation; the project names and marks identify their respective projects.
+The logos use real beveled geometry with raised details: Read the Room's chameleon, Rizome's branching medallion, and a molecule transitioning into five enamel glider tiles. The external visual references are the sites' [chameleon mark](https://readtheroom.site/images/RTR-logo_Aug2025.png) and [Rizome mark](https://www.rizomebiotech.ai/favicon.png). The geometry is a stylized adaptation; the project names and marks identify their respective projects.
 
 Cards are ordinary links with decorative 3D views. The scenes initialize near the viewport, tilt with the pointer or keyboard focus, and remain still when idle or when reduced motion is requested. Touch gestures retain normal link and page scrolling behavior. Local PNGs preserve the appearance when JavaScript or WebGL is unavailable. Brand colors stay fixed when the notebook enamel changes. Re-render the previews if the geometry or lighting changes.
 
@@ -113,4 +122,24 @@ Angel-5 appearance reference: https://www.carlmfg.com/angel-5-pencil-sharpener/ 
 
 ## GitHub Pages
 
-This is a static site with relative asset paths and a `.nojekyll` file, suitable for either a root Pages site or a repository project site. The draft has not been published. To publish later, place these files at the chosen repository’s publishing root and configure that repository’s Pages source. No changes to the current research workspace are needed.
+This is a static site with relative asset paths and a `.nojekyll` file. Pages uses **Deploy from a branch → main → /(root)** in `shayshay42/shayshay42.github.io`. No application server or build step is required. The live site is https://shayshay42.github.io/ and the playground is https://shayshay42.github.io/projects/molecular-game-of-life/.
+
+## Molecular Game of Life
+
+The playground is a browser implementation of the original molecular Conway app. It parses SMILES, adds explicit hydrogens, and uses binary bond adjacency as the starting pattern in a 100×100 grid. The original centering convention is retained, and every generation applies synchronous B3/S23 rules with wrapping edges. Molecules above 100 atoms including hydrogens are rejected. Atom order is retained; no canonicalization or atom sorting is applied. RDKit versions and live PubChem records can differ from historical runs, so the fixed examples record their exact SMILES for reproducibility.
+
+Name searches go directly to PubChem PUG REST when submitted. Results are cached in memory for the current tab, stale requests are cancelled, and a failed search preserves the current simulation. Explicit SMILES and the five examples need no PubChem connection. RDKit.js `2026.3.6` is pinned locally; its roughly 7.4 MB runtime loads only on the playground. Once those website assets are loaded, parsing and simulation run locally. See `assets/vendor/rdkit-2026.3.6/README.md` for source, license, and checksums. No Python, RDKit installation, API key, or database is needed to serve the site.
+
+The page starts with pemoline paused. Play/Pause, Step, Reset, and the speed slider control the canvas; hiding the tab pauses playback. Reset restores the selected molecule's original adjacency grid. With JavaScript disabled, the explanation remains readable. If chemistry loading fails, the page offers a retry.
+
+Core validation uses Node 22+ and the vendored chemistry runtime:
+
+```sh
+node --test tests/molecular-life.test.mjs
+```
+
+The browser acceptance suite uses Playwright and a running local server. Install Playwright in a separate tools directory, then point `PLAYWRIGHT_MODULE` to its `index.mjs`; set `BROWSER_CHANNEL=chrome` to use an installed Chrome, or install Playwright Chromium. `BASE_URL` can target a local preview or the published site:
+
+```sh
+PLAYWRIGHT_MODULE=/path/to/tools/node_modules/playwright/index.mjs BROWSER_CHANNEL=chrome node --test tests/molecular-browser.test.mjs
+```
